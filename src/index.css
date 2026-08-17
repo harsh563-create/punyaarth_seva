@@ -64,7 +64,97 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-forest);
 }
 
-/* Animations */
+/* ============ TREE ANIMATIONS ============ */
+
+@keyframes leafSway {
+  0%, 100% { transform: rotate(0deg) translateX(0); }
+  20% { transform: rotate(1.5deg) translateX(1.5px); }
+  40% { transform: rotate(-1deg) translateX(-1px); }
+  60% { transform: rotate(1deg) translateX(1px); }
+  80% { transform: rotate(-0.5deg) translateX(-0.5px); }
+}
+
+@keyframes branchSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(0.3deg); }
+}
+
+@keyframes fallingLeaf {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.85;
+  }
+  15% {
+    transform: translateY(150px) translateX(25px) rotate(40deg);
+    opacity: 0.8;
+  }
+  35% {
+    transform: translateY(380px) translateX(-15px) rotate(100deg);
+    opacity: 0.65;
+  }
+  55% {
+    transform: translateY(620px) translateX(30px) rotate(170deg);
+    opacity: 0.45;
+  }
+  75% {
+    transform: translateY(870px) translateX(5px) rotate(240deg);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(1200px) translateX(15px) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+@keyframes lightPulse {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.18; }
+}
+
+@keyframes canopyBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.005); }
+}
+
+.tree-leaf-sway {
+  animation: leafSway 4s ease-in-out infinite;
+}
+
+.tree-branch-sway {
+  animation: branchSway 6s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+.tree-falling-leaf {
+  animation: fallingLeaf linear infinite;
+}
+
+.tree-light-pulse {
+  animation: lightPulse 8s ease-in-out infinite;
+}
+
+/* The tree is one document-height scene on the home page.  Content sits above
+   it while the footer uses a translucent soil wash, letting the same roots
+   remain visible instead of introducing a second footer illustration. */
+.living-tree-container {
+  min-height: 100%;
+}
+
+.home-footer {
+  min-height: 34rem;
+  background:
+    linear-gradient(180deg, rgb(15 51 32 / 0.78) 0%, rgb(15 51 32 / 0.9) 100%),
+    radial-gradient(ellipse at center top, rgb(107 66 38 / 0.2), transparent 62%);
+}
+
+@media (max-width: 768px) {
+  .home-footer {
+    min-height: 0;
+  }
+}
+
+/* ============ EXISTING ANIMATIONS ============ */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

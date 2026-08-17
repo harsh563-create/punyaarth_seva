@@ -16,6 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { isOpen, toggle, close } = useMobileMenu();
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -33,7 +34,9 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-sm'
-            : 'bg-transparent'
+            : isHome
+            ? 'bg-transparent'
+            : 'bg-cream/95 backdrop-blur-md'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +54,9 @@ export default function Navbar() {
                     cx="20"
                     cy="20"
                     r="19"
-                    className="transition-colors duration-300 fill-forest"
+                    className={`transition-colors duration-300 ${
+                      scrolled || !isHome ? 'fill-forest' : 'fill-cream'
+                    }`}
                   />
                   <path
                     d="M20 10 C15 10, 11 16, 13 21 C15 26, 18 26, 20 32 C22 26, 25 26, 27 21 C29 16, 25 10, 20 10Z"
@@ -62,7 +67,9 @@ export default function Navbar() {
                 </svg>
               </div>
               <span
-                className="font-serif text-lg md:text-xl font-semibold text-forest"
+                className={`font-serif text-lg md:text-xl font-semibold transition-colors duration-300 ${
+                  scrolled || !isHome ? 'text-forest' : 'text-forest'
+                }`}
               >
                 Punyaarth Seva
               </span>
@@ -76,10 +83,10 @@ export default function Navbar() {
                   to={link.path}
                   className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
                     location.pathname === link.path
-                      ? 'text-forest bg-forest/5'
-                      : scrolled
+                      ? 'text-forest bg-forest/10'
+                      : scrolled || !isHome
                       ? 'text-text-light hover:text-forest hover:bg-forest/5'
-                      : 'text-text-light hover:text-forest'
+                      : 'text-text-light hover:text-forest hover:bg-forest/5'
                   }`}
                 >
                   {link.label}
@@ -103,7 +110,9 @@ export default function Navbar() {
             {/* Mobile Hamburger */}
             <button
               onClick={toggle}
-              className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg hover:bg-forest/5 transition-colors cursor-pointer"
+                  className={`lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
+                    'hover:bg-forest/5'
+                  }`}
               aria-label="Toggle menu"
             >
               <div className="w-5 flex flex-col gap-1.5">
