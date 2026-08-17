@@ -1,0 +1,88 @@
+import type { GalleryImage } from '@/types';
+
+export const galleryImages: GalleryImage[] = [
+  {
+    id: 'gal-001',
+    src: '/assets/images/food-seva.jpg',
+    alt: 'Volunteers distributing food to community members',
+    category: 'food-seva',
+    date: '2026-01-15',
+  },
+  {
+    id: 'gal-002',
+    src: '/assets/images/nature-seva.jpg',
+    alt: 'Tree plantation drive with community volunteers',
+    category: 'nature',
+    date: '2026-02-20',
+  },
+  {
+    id: 'gal-003',
+    src: '/assets/images/animal-care.jpg',
+    alt: 'Volunteers caring for stray animals',
+    category: 'animals',
+    date: '2026-03-10',
+  },
+  {
+    id: 'gal-004',
+    src: '/assets/images/community-support.jpg',
+    alt: 'Community support activity in the neighborhood',
+    category: 'community',
+    date: '2026-03-22',
+  },
+  {
+    id: 'gal-005',
+    src: '/assets/images/awareness.jpg',
+    alt: 'Health and hygiene awareness campaign',
+    category: 'awareness',
+    date: '2026-02-05',
+  },
+  {
+    id: 'gal-006',
+    src: '/assets/images/food-seva.jpg',
+    alt: 'Summer water distribution to daily wage workers',
+    category: 'food-seva',
+    date: '2026-04-05',
+  },
+  {
+    id: 'gal-007',
+    src: '/assets/images/community-support.jpg',
+    alt: 'Republic Day celebration and seva',
+    category: 'events',
+    date: '2026-01-26',
+  },
+  {
+    id: 'gal-008',
+    src: '/assets/images/nature-seva.jpg',
+    alt: 'River clean-up campaign',
+    category: 'nature',
+    date: '2026-04-22',
+  },
+  {
+    id: 'gal-009',
+    src: '/assets/images/animal-care.jpg',
+    alt: 'Bird water bowl initiative during summer',
+    category: 'animals',
+    date: '2026-05-15',
+  },
+  {
+    id: 'gal-010',
+    src: '/assets/images/community-support.jpg',
+    alt: 'Elderly care visit to old age home',
+    category: 'community',
+    date: '2026-03-08',
+  },
+  {
+    id: 'gal-011',
+    src: '/assets/images/food-seva.jpg',
+    alt: 'Food packets being prepared by volunteers',
+    category: 'food-seva',
+    date: '2026-06-10',
+  },
+  {
+    id: 'gal-012',
+    src: '/assets/images/nature-seva.jpg',
+    alt: 'World Environment Day celebration',
+    category: 'events',
+    date: '2026-06-05',
+  },
+];
