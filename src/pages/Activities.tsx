@@ -5,7 +5,7 @@ import GalleryCard from '@/components/ui/GalleryCard';
 import Modal from '@/components/ui/Modal';
 import { galleryImages } from '@/data/gallery';
 import { activities } from '@/data/activities';
-import type { GalleryImage, ActivityCategory } from '@/types';
+import type { GalleryImage } from '@/types';
 
 const filters = [
   { id: 'all', label: 'All' },

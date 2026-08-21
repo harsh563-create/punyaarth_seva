@@ -64,92 +64,178 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--color-forest);
 }
 
+/* ============ HERO SKY & SECTIONS ============ */
+
+.hero-sky {
+  background:
+    radial-gradient(52rem 34rem at 18% 12%, rgb(255 214 138 / 0.35), transparent 62%),
+    radial-gradient(44rem 30rem at 86% 78%, rgb(163 216 146 / 0.18), transparent 60%),
+    linear-gradient(180deg, #fdf4e0 0%, #faeed3 34%, #f7f0dd 66%, var(--color-cream) 100%);
+}
+
+.section-curve-top {
+  clip-path: ellipse(58% 42px at 50% 0%);
+}
+
+/* Underground world shared by the closing CTA + footer so roots can grow
+   continuously out of the page into the footer. */
+.soil-section {
+  background:
+    radial-gradient(60rem 22rem at 50% -6rem, rgb(107 66 38 / 0.28), transparent 70%),
+    linear-gradient(180deg, var(--color-forest-dark) 0%, #0b2a19 100%);
+}
+
+.home-footer {
+  min-height: 0;
+}
+
 /* ============ TREE ANIMATIONS ============ */
 
-@keyframes leafSway {
-  0%, 100% { transform: rotate(0deg) translateX(0); }
-  20% { transform: rotate(1.5deg) translateX(1.5px); }
-  40% { transform: rotate(-1deg) translateX(-1px); }
-  60% { transform: rotate(1deg) translateX(1px); }
-  80% { transform: rotate(-0.5deg) translateX(-0.5px); }
+@keyframes clusterSway {
+  0%, 100% { transform: rotate(-0.7deg); }
+  50% { transform: rotate(0.8deg); }
 }
 
-@keyframes branchSway {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(0.3deg); }
+@keyframes clusterSwayFast {
+  0%, 100% { transform: rotate(0.9deg) translateY(-0.6px); }
+  50% { transform: rotate(-1.1deg) translateY(0.8px); }
 }
 
-@keyframes fallingLeaf {
+.tree-cluster {
+  animation: clusterSway 7s ease-in-out infinite;
+}
+
+.tree-cluster-fast {
+  animation: clusterSwayFast 4.6s ease-in-out infinite;
+}
+
+@keyframes leafFall {
   0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 0.85;
+    transform: translateY(0);
+    opacity: 0;
   }
-  15% {
-    transform: translateY(150px) translateX(25px) rotate(40deg);
-    opacity: 0.8;
+  6% {
+    opacity: 0.95;
   }
-  35% {
-    transform: translateY(380px) translateX(-15px) rotate(100deg);
-    opacity: 0.65;
-  }
-  55% {
-    transform: translateY(620px) translateX(30px) rotate(170deg);
-    opacity: 0.45;
-  }
-  75% {
-    transform: translateY(870px) translateX(5px) rotate(240deg);
-    opacity: 0.25;
+  82% {
+    opacity: 0.9;
   }
   100% {
-    transform: translateY(1200px) translateX(15px) rotate(320deg);
+    transform: translateY(600px);
     opacity: 0;
   }
 }
 
-@keyframes lightPulse {
-  0%, 100% { opacity: 0.12; }
-  50% { opacity: 0.18; }
+.tree-fall {
+  animation-name: leafFall;
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.65, 0.6);
+  animation-iteration-count: infinite;
 }
 
-@keyframes canopyBreath {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.005); }
+@keyframes leafDrift {
+  0% { transform: translateX(-13px) rotate(-38deg); }
+  25% { transform: translateX(6px) rotate(14deg); }
+  50% { transform: translateX(-8px) rotate(-20deg); }
+  75% { transform: translateX(11px) rotate(30deg); }
+  100% { transform: translateX(-13px) rotate(-38deg); }
 }
 
-.tree-leaf-sway {
-  animation: leafSway 4s ease-in-out infinite;
+.tree-drift {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: leafDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-.tree-branch-sway {
-  animation: branchSway 6s ease-in-out infinite;
-  transform-origin: left center;
+@keyframes grassSway {
+  0%, 100% { transform: rotate(-3.5deg); }
+  50% { transform: rotate(4.5deg); }
 }
 
-.tree-falling-leaf {
-  animation: fallingLeaf linear infinite;
+.grass-blade {
+  animation-name: grassSway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-.tree-light-pulse {
-  animation: lightPulse 8s ease-in-out infinite;
+@keyframes birdPeck {
+  0%, 84%, 100% { transform: rotate(0deg); }
+  89% { transform: rotate(13deg); }
+  94% { transform: rotate(-3deg); }
 }
 
-/* The tree is one document-height scene on the home page.  Content sits above
-   it while the footer uses a translucent soil wash, letting the same roots
-   remain visible instead of introducing a second footer illustration. */
-.living-tree-container {
-  min-height: 100%;
+.tree-bird-sit {
+  transform-box: fill-box;
+  transform-origin: 50% 82%;
+  animation: birdPeck 7.5s ease-in-out infinite;
 }
 
-.home-footer {
-  min-height: 34rem;
-  background:
-    linear-gradient(180deg, rgb(15 51 32 / 0.78) 0%, rgb(15 51 32 / 0.9) 100%),
-    radial-gradient(ellipse at center top, rgb(107 66 38 / 0.2), transparent 62%);
+@keyframes birdFlyPath {
+  0% {
+    transform: translate(var(--fly-from-x), var(--fly-from-y));
+    opacity: 0;
+  }
+  6% { opacity: 0.85; }
+  88% { opacity: 0.85; }
+  100% {
+    transform: translate(var(--fly-to-x), var(--fly-to-y));
+    opacity: 0;
+  }
 }
 
-@media (max-width: 768px) {
-  .home-footer {
-    min-height: 0;
+.tree-bird-fly {
+  animation-name: birdFlyPath;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes wingFlap {
+  0%, 100% { transform: scaleY(0.45); }
+  50% { transform: scaleY(1.15); }
+}
+
+.tree-bird-flap {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wingFlap 0.6s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.tree-sun-glow {
+  animation: sunPulse 9s ease-in-out infinite;
+}
+
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(14px, -18px) scale(1.04); }
+}
+
+.animate-float-blob {
+  animation: floatBlob 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-cluster,
+  .tree-cluster-fast,
+  .tree-fall,
+  .tree-drift,
+  .grass-blade,
+  .tree-bird-sit,
+  .tree-bird-fly,
+  .tree-bird-flap,
+  .tree-sun-glow,
+  .animate-float-blob {
+    animation: none !important;
+  }
+
+  .tree-bird-fly {
+    opacity: 0;
   }
 }
 
