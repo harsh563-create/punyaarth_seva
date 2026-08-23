@@ -4,6 +4,7 @@ import {
   galleryImages as staticGallery,
   impactStats as staticImpact,
   sevaCategories as staticSeva,
+  teamMembers as staticTeam,
 } from '@/data';
 import type {
   Activity,
@@ -13,6 +14,7 @@ import type {
   GalleryImage,
   ImpactStat,
   SevaCategory,
+  TeamMember,
 } from '@/types';
 import { getSupabase, isSupabaseConfigured } from '@/lib/supabase';
 
@@ -29,6 +31,7 @@ const TABLES = {
   galleryImages: 'gallery_images',
   impactStats: 'impact_stats',
   donations: 'donations',
+  teamMembers: 'team_members',
 } as const;
 
 /** Empty defaults — real UPI/QR values are set from the admin panel only. */
@@ -90,6 +93,37 @@ export function getGalleryImages(): Promise<GalleryImage[]> {
 
 export function getImpactStats(): Promise<ImpactStat[]> {
   return fetchTable<ImpactStat>(TABLES.impactStats, staticImpact);
+}
+
+/** All team rows in display order — admin-panel consumers only. */
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  if (!isSupabaseConfigured()) return staticTeam;
+  try {
+    const { data, error } = await getSupabase()
+      .from(TABLES.teamMembers)
+      .select('*')
+      .order('orderIndex', { ascending: true })
+      .order('created_at', { ascending: true });
+    if (error) throw error;
+    if (!data || data.length === 0) return staticTeam;
+    return data as TeamMember[];
+  } catch (error) {
+    console.error('[data] Failed to load team members:', error);
+    warnOnce('Supabase query for "team_members" failed.');
+    return staticTeam;
+  }
+}
+
+/**
+ * Public-safe team list for the Our Team page: only active members with
+ * public profiles, ordered for display. Phone numbers are stripped unless
+ * the member explicitly approved publishing them.
+ */
+export async function getPublicTeamMembers(): Promise<TeamMember[]> {
+  const members = await getTeamMembers();
+  return members
+    .filter((m) => m.active && m.publicProfile)
+    .map((m) => ({ ...m, phone: m.showPhone ? m.phone : '' }));
 }
 
 /** Donation page configuration; empty strings mean "not configured yet". */

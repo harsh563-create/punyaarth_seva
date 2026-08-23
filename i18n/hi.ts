@@ -7,6 +7,7 @@ const hi: Dictionary = {
     seva: 'हमारी सेवा',
     activities: 'गतिविधियाँ',
     events: 'आयोजन',
+    team: 'हमारी टीम',
     join: 'जुड़ें',
     contact: 'संपर्क करें',
     donate: 'दान करें',
@@ -238,6 +239,24 @@ const hi: Dictionary = {
     causeCommunity: 'सामुदायिक कल्याण',
     safeNote:
       'भुगतान सीधे Punyaarth Seva Samiti के आधिकारिक UPI खाते में जाता है। हम कभी भी आपका बैंक पासवर्ड, OTP या कार्ड विवरण नहीं माँगते।',
+  },
+  teamPage: {
+    heroTitle: 'हमारी टीम से मिलें',
+    heroSubtitle:
+      'समाज सेवा और एक बेहतर कल के लिए समर्पित लोग, एक साथ काम करते हुए।',
+    leadershipEyebrow: 'नेतृत्व',
+    leadershipSubtitle: 'वे लोग जो हर दिन हमारे मिशन का मार्गदर्शन करते हैं।',
+    coreEyebrow: 'मुख्य टीम',
+    coreSubtitle: 'समन्वयक जो हर सेवा को सुचारू रूप से चलाते हैं।',
+    volunteersEyebrow: 'सदस्य एवं स्वयंसेवक',
+    volunteersSubtitle: 'पुण्यार्थ की धड़कन — जो लोग हर बार मैदान में होते हैं।',
+    viewProfile: 'प्रोफ़ाइल देखें',
+    closeProfile: 'प्रोफ़ाइल बंद करें',
+    phoneLabel: 'फ़ोन',
+    joinMissionTitle: 'हमारे मिशन से जुड़ें',
+    joinMissionText:
+      'आप भी पुण्यार्थ सेवा समिति का हिस्सा बन सकते हैं और अर्थपूर्ण समाज सेवा में अपना समय, कौशल और सहयोग दे सकते हैं।',
+    joinButton: 'जुड़ें',
   },
   notFound: {
     title: 'पृष्ठ नहीं मिला',

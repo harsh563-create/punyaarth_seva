@@ -229,6 +229,35 @@ export const donationSettingsSchema = makeParse({
   contactPhone: { validate: text(40, true) },
 });
 
+/** Optional member phone — empty allowed, digits-only when present. */
+const optionalPhone: Validator = (v) => {
+  if (v === null || v === undefined || v === '') return '';
+  const t = typeof v === 'string' ? v.trim() : '';
+  if (!t) return '';
+  const digits = t.replace(/\D/g, '');
+  if (digits.length < 10 || digits.length > 13) {
+    fail('Enter a valid mobile number');
+  }
+  return digits;
+};
+
+export const MEMBER_CATEGORIES = ['leadership', 'core', 'volunteer'] as const;
+
+/** Team member profile (POST/PUT /api/team). */
+export const teamSchema = makeParse({
+  name: { validate: text(120), required: true },
+  designation: { validate: localizedText, required: true },
+  category: { validate: oneOf(MEMBER_CATEGORIES) },
+  bio: { validate: localizedText },
+  photo: { validate: text(500, true) },
+  socials: { validate: stringList },
+  phone: { validate: optionalPhone },
+  showPhone: { validate: boolean },
+  active: { validate: boolean },
+  publicProfile: { validate: boolean },
+  orderIndex: { validate: integer(0) },
+});
+
 // ----------------------------------------------------------- route maker --
 
 /** Strip DB-only columns so returned rows match the TypeScript types. */

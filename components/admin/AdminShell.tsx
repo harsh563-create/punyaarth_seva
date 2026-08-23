@@ -16,6 +16,7 @@ import {
   LogoutIcon,
   MenuIcon,
   RupeeIcon,
+  UsersIcon,
 } from './icons';
 
 const NAV_ITEMS = [
@@ -26,6 +27,7 @@ const NAV_ITEMS = [
   { href: '/admin/seva', label: 'Seva Categories', icon: LeafIcon },
   { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon },
   { href: '/admin/impact', label: 'Impact Stats', icon: ChartIcon },
+  { href: '/admin/team', label: 'Team', icon: UsersIcon },
 ];
 
 function isActive(pathname: string, href: string): boolean {

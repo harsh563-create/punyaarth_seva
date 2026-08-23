@@ -7,6 +7,7 @@ import {
   getGalleryImages,
   getImpactStats,
   getSevaCategories,
+  getTeamMembers,
 } from '@/lib/data';
 import {
   CalendarIcon,
@@ -20,7 +21,7 @@ import {
 } from '@/components/admin/icons';
 
 export default async function AdminDashboardPage() {
-  const [events, activities, sevaCategories, galleryImages, impactStats, donations, donationSettings] =
+  const [events, activities, sevaCategories, galleryImages, impactStats, donations, donationSettings, team] =
     await Promise.all([
       getEvents(),
       getActivities(),
@@ -29,6 +30,7 @@ export default async function AdminDashboardPage() {
       getImpactStats(),
       getDonations(),
       getDonationSettings(),
+      getTeamMembers(),
     ]);
 
   const pendingDonations = donations.filter((d) => d.status === 'pending');
@@ -94,6 +96,12 @@ export default async function AdminDashboardPage() {
       value: impactStats.length,
       icon: ChartIcon,
       href: '/admin/impact',
+    },
+    {
+      label: 'Team Members',
+      value: team.filter((m) => m.active && m.publicProfile).length,
+      icon: UsersIcon,
+      href: '/admin/team',
     },
   ];
 
@@ -224,6 +232,7 @@ export default async function AdminDashboardPage() {
               { href: '/admin/events', label: 'Add new event' },
               { href: '/admin/gallery', label: 'Upload gallery photos' },
               { href: '/admin/impact', label: 'Update impact numbers' },
+              { href: '/admin/team', label: 'Manage team members' },
             ].map(({ href, label }) => (
               <li key={label}>
                 <Link

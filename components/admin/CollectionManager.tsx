@@ -37,8 +37,8 @@ export type ColumnTone = 'forest' | 'saffron' | 'earth' | 'muted';
 export type CellSpec =
   /** LocalizedText field rendered with EN + HI lines. */
   | { kind: 'localized'; field: string }
-  /** Plain muted text of a field value. */
-  | { kind: 'text'; field: string }
+  /** Plain muted text of a field value; `strong` renders it prominent. */
+  | { kind: 'text'; field: string; strong?: boolean }
   /** Truncated single-line view of a LocalizedText field (EN). */
   | { kind: 'truncate'; field: string }
   /** Badge for a string field; tone may be fixed or mapped per value. */
@@ -145,7 +145,13 @@ function Cell({ spec, row }: { spec: CellSpec; row: Row }) {
     case 'localized':
       return <LocalizedCell text={localized(value)} />;
     case 'text':
-      return <MutedText>{String(value ?? '')}</MutedText>;
+      return spec.strong ? (
+        <span className="font-sans text-sm font-medium text-text">
+          {String(value ?? '')}
+        </span>
+      ) : (
+        <MutedText>{String(value ?? '')}</MutedText>
+      );
     case 'truncate':
       return (
         <span className="block max-w-[180px] truncate font-sans text-sm">

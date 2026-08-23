@@ -97,8 +97,21 @@ export interface VolunteerWay {
   icon: string;
 }
 
+export type MemberCategory = 'leadership' | 'core' | 'volunteer';
+
 export interface TeamMember {
+  id: string;
   name: string;
-  role: string;
-  image: string;
+  designation: LocalizedText;
+  category: MemberCategory;
+  bio: LocalizedText;
+  photo: string;
+  /** Public profile links (Instagram, LinkedIn, X…); icons derive from host. */
+  socials: string[];
+  /** Private contact — never rendered unless showPhone is approved. */
+  phone: string;
+  showPhone: boolean;
+  active: boolean;
+  publicProfile: boolean;
+  orderIndex: number;
 }

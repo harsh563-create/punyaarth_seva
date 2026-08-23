@@ -5,6 +5,7 @@ const en = {
     seva: 'Our Seva',
     activities: 'Activities',
     events: 'Events',
+    team: 'Our Team',
     join: 'Join Us',
     contact: 'Contact',
     donate: 'Donate',
@@ -242,6 +243,24 @@ const en = {
     causeCommunity: 'Community welfare',
     safeNote:
       'Payments go directly to the official Punyaarth Seva Samiti UPI account. We never ask for your bank password, OTP or card details.',
+  },
+  teamPage: {
+    heroTitle: 'Meet Our Team',
+    heroSubtitle:
+      'Dedicated people working together for समाज सेवा and a better tomorrow.',
+    leadershipEyebrow: 'Leadership',
+    leadershipSubtitle: 'The people who guide our mission every day.',
+    coreEyebrow: 'Core Team',
+    coreSubtitle: 'Coordinators who keep every seva running smoothly.',
+    volunteersEyebrow: 'Members & Volunteers',
+    volunteersSubtitle: 'The heart of Punyaarth — the people who show up.',
+    viewProfile: 'View Profile',
+    closeProfile: 'Close profile',
+    phoneLabel: 'Phone',
+    joinMissionTitle: 'Join Our Mission',
+    joinMissionText:
+      'You can also become a part of Punyaarth Seva Samiti and contribute your time, skills and support towards meaningful social service.',
+    joinButton: 'Join Us',
   },
   notFound: {
     title: 'Page Not Found',

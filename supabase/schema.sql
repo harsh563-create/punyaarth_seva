@@ -85,6 +85,26 @@ create table if not exists public.donation_settings (
   created_at              timestamptz not null default now()
 );
 
+-- Team members shown on the Our Team page. No anon policy on purpose:
+-- rows can hold private contact details, so reads go through the Next.js
+-- server (service role) and the admin-guarded /api/team routes only.
+create table if not exists public.team_members (
+  id               text primary key,
+  name             text not null,
+  designation      jsonb not null default '{"en":"","hi":""}',
+  category         text not null default 'volunteer'
+                   check (category in ('leadership', 'core', 'volunteer')),
+  bio              jsonb not null default '{"en":"","hi":""}',
+  photo            text not null default '',
+  socials          jsonb not null default '[]',
+  phone            text not null default '',
+  "showPhone"      boolean not null default false,
+  active           boolean not null default true,
+  "publicProfile"  boolean not null default true,
+  "orderIndex"     integer not null default 0,
+  created_at       timestamptz not null default now()
+);
+
 -- Donor-submitted payment confirmations. No anon policies: reads/writes go
 -- through the Next.js API with the service-role key, so donor data stays private.
 create table if not exists public.donations (
