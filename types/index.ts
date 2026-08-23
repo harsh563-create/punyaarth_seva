@@ -97,6 +97,25 @@ export interface VolunteerWay {
   icon: string;
 }
 
+/** Editable narrative block on the About page (stored as one jsonb object). */
+export interface AboutLabeledItem {
+  title: LocalizedText;
+  description: LocalizedText;
+}
+
+export interface AboutContent {
+  storyP1: LocalizedText;
+  storyP2: LocalizedText;
+  storyP3: LocalizedText;
+  /** Photo shown beside the story section (URL or /api/upload path). */
+  storyImage: string;
+  visionQuote: LocalizedText;
+  missionItems: AboutLabeledItem[];
+  valuesItems: AboutLabeledItem[];
+  ctaTitle: LocalizedText;
+  ctaText: LocalizedText;
+}
+
 export type MemberCategory = 'leadership' | 'core' | 'volunteer';
 
 export interface TeamMember {

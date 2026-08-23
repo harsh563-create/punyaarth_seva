@@ -103,11 +103,7 @@ export default function AdminLoginForm({ from }: { from?: string }) {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-xs leading-relaxed text-cream/50">
-          Set the password via the{' '}
-          <code className="rounded bg-black/30 px-1.5 py-0.5">ADMIN_PASSWORD</code>{' '}
-          environment variable.
-        </p>
+       
       </div>
 
       <p className="mt-6 text-center text-sm text-cream/60">

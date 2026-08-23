@@ -126,6 +126,21 @@ const localizedList: Validator = (v) => {
   return v.map(localizedText);
 };
 
+/** List of { title, description } blocks with both languages. */
+const localizedItemList: Validator = (v) => {
+  if (!Array.isArray(v)) fail('Expected a list of items');
+  return v.map((entry) => {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      fail('Each item must be an object with title and description');
+    }
+    const o = entry as Record<string, unknown>;
+    return {
+      title: localizedText(o.title),
+      description: localizedText(o.description),
+    };
+  });
+};
+
 // ---------------------------------------------------------------- schemas --
 
 function makeParse(specs: Record<string, FieldSpec>): ParseFn {
@@ -256,6 +271,22 @@ export const teamSchema = makeParse({
   active: { validate: boolean },
   publicProfile: { validate: boolean },
   orderIndex: { validate: integer(0) },
+});
+
+/**
+ * About page narrative (PUT /api/about). Stored as a single jsonb document,
+ * so every key is required — partial saves would silently drop blocks.
+ */
+export const aboutContentSchema = makeParse({
+  storyP1: { validate: localizedText, required: true },
+  storyP2: { validate: localizedText, required: true },
+  storyP3: { validate: localizedText, required: true },
+  storyImage: { validate: text(500, true), required: true },
+  visionQuote: { validate: localizedText, required: true },
+  missionItems: { validate: localizedItemList, required: true },
+  valuesItems: { validate: localizedItemList, required: true },
+  ctaTitle: { validate: localizedText, required: true },
+  ctaText: { validate: localizedText, required: true },
 });
 
 // ----------------------------------------------------------- route maker --

@@ -7,6 +7,7 @@ import {
   teamMembers as staticTeam,
 } from '@/data';
 import type {
+  AboutContent,
   Activity,
   Donation,
   DonationSettings,
@@ -32,6 +33,7 @@ const TABLES = {
   impactStats: 'impact_stats',
   donations: 'donations',
   teamMembers: 'team_members',
+  aboutContent: 'about_content',
 } as const;
 
 /** Empty defaults — real UPI/QR values are set from the admin panel only. */
@@ -126,8 +128,28 @@ export async function getPublicTeamMembers(): Promise<TeamMember[]> {
     .map((m) => ({ ...m, phone: m.showPhone ? m.phone : '' }));
 }
 
-/** Donation page configuration; empty strings mean "not configured yet". */
-export async function getDonationSettings(): Promise<DonationSettings> {
+/**
+ * About page narrative overrides. Returns null until an admin saves from
+ * /admin/about — the site then renders bundled translations.
+ */
+export async function getAboutContent(): Promise<AboutContent | null> {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const { data, error } = await getSupabase()
+      .from(TABLES.aboutContent)
+      .select('content')
+      .eq('id', 'default')
+      .maybeSingle();
+    if (error) throw error;
+    return (data?.content as AboutContent | undefined) ?? null;
+  } catch (error) {
+    console.error('[data] Failed to load about content:', error);
+    warnOnce('Supabase query for "about_content" failed.');
+    return null;
+  }
+}
+
+/** Donation page configuration; empty strings mean "not configured yet". */export async function getDonationSettings(): Promise<DonationSettings> {
   if (!isSupabaseConfigured()) return DEFAULT_DONATION_SETTINGS;
   try {
     const { data } = await getSupabase()

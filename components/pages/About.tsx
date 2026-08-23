@@ -7,6 +7,8 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
 import FadeIn from '@/components/ui/FadeIn';
 import { useLanguage } from '@/i18n/useLanguage';
+import { DEFAULT_ABOUT_STORY_IMAGE } from '@/data';
+import type { AboutContent } from '@/types';
 
 interface LabeledItem {
   title: string;
@@ -38,12 +40,41 @@ const principleIcons = [
 
 const valueIcons = ['🤲', '💚', '🤝', '🫂'];
 
-export default function About() {
+interface AboutProps {
+  /** Admin-edited overrides; blank/missing fields fall back to translations. */
+  content?: AboutContent | null;
+}
+
+export default function About({ content = null }: AboutProps) {
   const { ref: storyRef, inView: storyInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: visionRef, inView: visionInView } = useInView({ triggerOnce: true, threshold: 0.1 });
-  const { t, tl } = useLanguage();
-  const missionPrinciples = tl<LabeledItem[]>('about.missionItems');
-  const values = tl<LabeledItem[]>('about.valuesItems');
+  const { t, tl, lang } = useLanguage();
+  const baseMission = tl<LabeledItem[]>('about.missionItems');
+  const baseValues = tl<LabeledItem[]>('about.valuesItems');
+
+  // DB value for the active language wins; otherwise the bundled translation.
+  const pick = (value: { en?: string; hi?: string } | undefined, fallback: string): string => {
+    const s = value?.[lang];
+    return s && s.trim() ? s : fallback;
+  };
+  const storyP1 = pick(content?.storyP1, t('about.storyP1'));
+  const storyP2 = pick(content?.storyP2, t('about.storyP2'));
+  const storyP3 = pick(content?.storyP3, t('about.storyP3'));
+  const visionQuote = pick(content?.visionQuote, t('about.visionQuote'));
+  const ctaTitle = pick(content?.ctaTitle, t('about.ctaTitle'));
+  const ctaText = pick(content?.ctaText, t('about.ctaText'));
+  const storyImage =
+    content?.storyImage && content.storyImage.trim()
+      ? content.storyImage
+      : DEFAULT_ABOUT_STORY_IMAGE;
+  const missionPrinciples = baseMission.map((item, i) => ({
+    title: pick(content?.missionItems?.[i]?.title, item.title),
+    description: pick(content?.missionItems?.[i]?.description, item.description),
+  }));
+  const values = baseValues.map((item, i) => ({
+    title: pick(content?.valuesItems?.[i]?.title, item.title),
+    description: pick(content?.valuesItems?.[i]?.description, item.description),
+  }));
 
   return (
     <>
@@ -62,15 +93,15 @@ export default function About() {
                 {t('about.storyTitle')}
               </h2>
               <div className="mt-6 space-y-4 text-text-muted leading-relaxed">
-                <p>{t('about.storyP1')}</p>
-                <p>{t('about.storyP2')}</p>
-                <p>{t('about.storyP3')}</p>
+                <p>{storyP1}</p>
+                <p>{storyP2}</p>
+                <p>{storyP3}</p>
               </div>
             </div>
             <div className={`isolate ${storyInView ? 'animate-slide-in-right' : 'opacity-0'}`}>
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <img
-                  src="/assets/images/community-support.jpg"
+                  src={storyImage}
                   alt="Punyaarth Seva volunteers together"
                   className="w-full h-[400px] md:h-[500px] object-cover"
                 />
@@ -92,7 +123,7 @@ export default function About() {
           <div className={`${visionInView ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <span className="text-saffron font-medium text-sm tracking-wide uppercase">{t('about.visionEyebrow')}</span>
             <blockquote className="mt-6 font-serif text-2xl md:text-3xl lg:text-4xl leading-relaxed italic text-text-on-dark/90">
-              {t('about.visionQuote')}
+              {visionQuote}
             </blockquote>
             <div className="mt-6 h-1 w-16 bg-saffron rounded-full mx-auto" />
           </div>
@@ -151,10 +182,10 @@ export default function About() {
       <section className="py-20 md:py-28 bg-cream">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-text">
-            {t('about.ctaTitle')}
+            {ctaTitle}
           </h2>
           <p className="mt-4 text-text-muted text-lg">
-            {t('about.ctaText')}
+            {ctaText}
           </p>
           <div className="mt-8">
             <Link href="/join">

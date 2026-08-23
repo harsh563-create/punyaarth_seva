@@ -69,6 +69,15 @@ create table if not exists public.impact_stats (
   created_at timestamptz not null default now()
 );
 
+-- About page narrative content (single row, id = 'default'). One jsonb
+-- document holding all editable blocks; blank fields fall back to the
+-- bundled translations. No anon policy: served through the Next.js API.
+create table if not exists public.about_content (
+  id         text primary key default 'default',
+  content    jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 -- Donation page configuration (single row, id = 'default').
 -- UPI ID / QR code are intentionally empty until the organization sets
 -- real values from the admin panel — no demo payment details ship.

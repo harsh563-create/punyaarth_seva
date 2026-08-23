@@ -9,6 +9,7 @@ import {
   ChartIcon,
   CloseIcon,
   DashboardIcon,
+  DocIcon,
   ExternalLinkIcon,
   HeartHandshakeIcon,
   ImageIcon,
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
   { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon },
   { href: '/admin/impact', label: 'Impact Stats', icon: ChartIcon },
   { href: '/admin/team', label: 'Team', icon: UsersIcon },
+  { href: '/admin/about', label: 'About Page', icon: DocIcon },
 ];
 
 function isActive(pathname: string, href: string): boolean {
