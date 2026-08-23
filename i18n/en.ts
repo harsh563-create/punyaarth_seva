@@ -1,0 +1,196 @@
+const en = {
+  nav: {
+    home: 'Home',
+    about: 'About',
+    seva: 'Our Seva',
+    activities: 'Activities',
+    events: 'Events',
+    join: 'Join Us',
+    contact: 'Contact',
+  },
+  navbar: {
+    joinCta: 'Join Us',
+    joinMobile: 'Join Our Seva',
+    brandTagline: 'Seva for Humanity, Nature & Every Life',
+  },
+  footer: {
+    quickLinks: 'Quick Links',
+    contact: 'Contact',
+    followUs: 'Follow Us',
+    followText: 'See our seva journey on social media.',
+    tagline: 'Seva for Humanity, Nature & Every Life.',
+    motto: 'Rooted in kindness, growing together.',
+    rights: '\u00A9 2026 Punyaarth Seva. All rights reserved.',
+    madeWith: 'Made with \u2764\uFE0F for Seva',
+    aboutUs: 'About Us',
+  },
+  common: {
+    volunteers: 'volunteers',
+    upcoming: 'Upcoming',
+    viewDetails: 'View Details',
+    joinEvent: 'Join This Event',
+    learnMore: 'Learn More',
+    scroll: 'Scroll',
+    categories: {
+      all: 'All',
+      'food-seva': 'Food Seva',
+      nature: 'Nature',
+      animals: 'Animals',
+      community: 'Community',
+      events: 'Events',
+      awareness: 'Awareness',
+    },
+  },
+  home: {
+    badge: 'Seva for Humanity, Nature & Every Life',
+    titleTop: 'Grow a Future',
+    titleBottom: 'Rooted in Kindness.',
+    subtitle:
+      'Every act of seva plants a seed of change. Join our community and watch kindness grow into something that sustains lives.',
+    ctaPrimary: 'Plant a Future',
+    ctaSecondary: 'Explore Our Work',
+    missionEyebrow: 'Our Mission',
+    missionTitleA: 'Every Branch of Seva',
+    missionTitleB: 'Grows from Compassion.',
+    missionP1:
+      'Punyaarth Seva started with a simple idea \u2014 that ordinary people, coming together, can create extraordinary change for their community, their environment, and every living being.',
+    missionP2:
+      'Like a tree that gives shelter, food, and oxygen, our seva extends in every direction \u2014 feeding the hungry, nurturing nature, caring for animals, and building a kinder world.',
+    storyLink: 'Learn Our Story',
+    impactEyebrow: 'Our Impact',
+    impactTitleA: 'Seeds of Kindness,',
+    impactTitleB: ' A Forest of Change.',
+    workEyebrow: 'Our Work',
+    workTitleA: 'Branches of Our ',
+    workTitleB: 'Seva.',
+    storiesEyebrow: 'Stories',
+    storiesTitleA: 'Voices from Our ',
+    storiesTitleB: 'Community.',
+    supportEyebrow: 'Support Us',
+    supportTitle: 'Every Root Needs Nourishment.',
+    supportText:
+      'Your support helps us reach more people, plant more trees, and build a stronger, kinder community. Every contribution matters.',
+    supportCta: 'Support Our Seva',
+    touchCta: 'Get in Touch',
+    programs: [
+      { title: 'Dana Pani', desc: 'Providing food and water to people and animals in need across our community.' },
+      { title: 'Nature Seva', desc: 'Tree plantations, river clean-ups, and environmental awareness campaigns.' },
+      { title: 'Community Support', desc: 'Helping families, elderly citizens, and underprivileged individuals.' },
+      { title: 'Animal & Bird Care', desc: 'Feeding strays, water bowls for birds, and shelter collaborations.' },
+    ],
+    values: [
+      { title: 'Serve Selflessly', desc: 'We give our time, energy, and resources without expecting anything in return.' },
+      { title: 'Protect Nature', desc: 'We work to preserve and restore the natural environment for future generations.' },
+      { title: 'Inspire Others', desc: 'We encourage people to contribute in their own way and spread the spirit of seva.' },
+    ],
+    testimonials: [
+      { text: 'Joining Punyaarth Seva changed my perspective on life. Serving others gives a peace nothing else can.', name: 'Priya Sharma', role: 'Volunteer' },
+      { text: 'The food distribution drives are incredibly well-organized. It feels amazing to see families smile.', name: 'Rahul Verma', role: 'Volunteer' },
+      { text: 'Their tree plantation drives have brought greenery back to our neighborhood. Truly grateful.', name: 'Anita Devi', role: 'Community Member' },
+    ],
+  },
+  about: {
+    heroTitle: 'A Community Built on Seva.',
+    heroSubtitle:
+      'We are a group of people who voluntarily come together to help society, people, animals, and nature.',
+    storyEyebrow: 'Our Story',
+    storyTitle: 'Born from a Shared Belief',
+    storyP1:
+      'Punyaarth Seva started with a simple idea \u2014 that ordinary people can come together and do extraordinary things for their community. What began as a small group of like-minded individuals has grown into a movement of volunteers dedicated to selfless service.',
+    storyP2:
+      "We believe that everyone has something to offer \u2014 whether it's time, skills, or simply a willingness to help. Our community thrives on this belief, bringing together people from all walks of life who share a common goal: to serve others without expectation.",
+    storyP3:
+      'From distributing food to planting trees, from caring for stray animals to organizing community events \u2014 every activity we undertake is driven by love, compassion, and the desire to make our world a little better.',
+    visionEyebrow: 'Our Vision',
+    visionQuote:
+      '\u201CTo create a kinder, cleaner and more compassionate society where people come together to help one another and care for every life.\u201D',
+    missionTitle: 'Our Mission',
+    missionSubtitle: 'Guided by purpose, driven by compassion.',
+    missionItems: [
+      { title: 'Serve Selflessly', description: 'We give our time, energy, and resources without expecting anything in return.' },
+      { title: 'Help Those in Need', description: 'We reach out to people, animals, and communities that need support and care.' },
+      { title: 'Protect Nature', description: 'We work to preserve and restore the natural environment for future generations.' },
+      { title: 'Inspire Others', description: 'We encourage and motivate people to contribute in their own way.' },
+    ],
+    valuesTitle: 'Our Values',
+    valuesSubtitle: 'The principles that guide everything we do.',
+    valuesItems: [
+      { title: 'Seva', description: 'Selfless service without expecting anything in return.' },
+      { title: 'Compassion', description: 'Understanding and helping those who need support.' },
+      { title: 'Responsibility', description: 'Taking responsibility for our community and environment.' },
+      { title: 'Togetherness', description: 'Believing that positive change happens when people come together.' },
+    ],
+    ctaTitle: 'Want to Be a Part of This Journey?',
+    ctaText: 'Join our growing community of volunteers and make a difference.',
+    ctaButton: 'Join Punyaarth Seva',
+  },
+  sevaPage: {
+    heroTitle: 'Our Seva',
+    heroSubtitle:
+      'Every type of service matters. Explore the different ways we serve our community.',
+    relatedActivities: 'Related Activities',
+    ctaTitle: 'Every Type of Seva Matters',
+    ctaText: 'Choose how you want to contribute. Every act of service counts.',
+    ctaButton: 'Join Our Seva',
+  },
+  activitiesPage: {
+    heroTitle: 'Activities & Gallery',
+    heroSubtitle:
+      'A visual journey through our seva activities and the moments that define our mission.',
+    activitiesHeading: 'Activities',
+    galleryHeading: 'Photo Gallery',
+  },
+  eventsPage: {
+    heroTitle: 'Seva & Community Events',
+    heroSubtitle:
+      'Join us in making a difference through meaningful community events and seva activities.',
+    upcomingTitle: 'Upcoming Events',
+    upcomingSubtitle:
+      'Be a part of our upcoming seva activities and community gatherings.',
+    pastTitle: 'Past Events',
+    pastSubtitle: 'A look back at our completed events and their impact.',
+    noUpcoming: 'No upcoming events at the moment. Check back soon!',
+  },
+  eventCard: {
+    joined: 'joined',
+    needed: 'needed',
+  },
+  joinPage: {
+    heroTitle: 'Your Time Can Become Someone\u2019s Hope.',
+    heroSubtitle: 'Anyone can contribute. Find the way that works best for you.',
+    waysTitle: 'Ways You Can Help',
+    waysSubtitle: 'There are many ways to be a part of Punyaarth Seva.',
+    volunteerTitle: 'Want to Volunteer?',
+    volunteerText:
+      'Every volunteer makes a difference. Reach out to us and we\u2019ll connect you with opportunities to serve.',
+    touchCta: 'Get in Touch',
+  },
+  contactPage: {
+    heroTitle: 'Get in Touch',
+    heroSubtitle:
+      'Have a question, want to volunteer, or just want to say hello? We\u2019d love to hear from you.',
+    infoTitle: 'Contact Information',
+    infoText:
+      'We are always happy to connect with people who share our passion for seva and community service.',
+    email: 'Email',
+    phone: 'Phone (optional)',
+    location: 'Location',
+    india: 'India',
+    mapPlaceholder: 'Map Integration',
+    formTitle: 'Send Us a Message',
+    successMessage: "Thank you for your message! We'll get back to you soon.",
+    nameLabel: 'Name',
+    namePlaceholder: 'Your name',
+    emailLabel: 'Email',
+    messageLabel: 'Message',
+    messagePlaceholder: 'Your message...',
+    sendButton: 'Send Message',
+  },
+  notFound: {
+    title: 'Page Not Found',
+    text: "The page you're looking for doesn't exist or has been moved. Let's get you back on track.",
+    backHome: 'Back to Home',
+  },
+};
+
+export default en;
