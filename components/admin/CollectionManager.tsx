@@ -253,7 +253,9 @@ export default function CollectionManager<T extends Row>({
         return null;
       }
       setError(null);
-      return payload.item ?? null;
+      // Success payloads are either { item } (POST/PUT) or { ok: true }
+      // (DELETE); both must resolve truthy for the caller's optimistic update.
+      return payload.item ?? (payload as T);
     } catch {
       setError('Network error — change shown locally only.');
       return null;
@@ -308,6 +310,22 @@ export default function CollectionManager<T extends Row>({
     setModalOpen(true);
   }
 
+  /** Pulls the authoritative list back from the API after a mutation so the
+   *  table always mirrors what is stored in Supabase. */
+  async function fetchServerItems(): Promise<T[] | null> {
+    if (!apiPath) return null;
+    try {
+      const response = await fetch(apiPath);
+      const payload = (await response.json().catch(() => ({}))) as {
+        items?: T[];
+      };
+      if (response.ok && Array.isArray(payload.items)) return payload.items;
+    } catch {
+      /* fall back to the optimistic update below */
+    }
+    return null;
+  }
+
   async function saveDraft() {
     const item = draftToItem(draft, editingId ?? newId());
 
@@ -328,6 +346,9 @@ export default function CollectionManager<T extends Row>({
       ]);
     }
     setModalOpen(false);
+
+    const fresh = await fetchServerItems();
+    if (fresh) setItems(fresh);
   }
 
   function newId(): string {
@@ -347,6 +368,9 @@ export default function CollectionManager<T extends Row>({
     }
     setItems((prev) => prev.filter((row) => row.id !== id));
     setConfirmingId(null);
+
+    const fresh = await fetchServerItems();
+    if (fresh) setItems(fresh);
   }
 
   async function resetAll() {

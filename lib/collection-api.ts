@@ -161,7 +161,7 @@ const CATEGORIES = [
 export const eventsSchema = makeParse({
   title: { validate: localizedText, required: true },
   date: { validate: text(20), required: true },
-  description: { validate: text(5000, true) },
+  description: { validate: localizedText },
   location: { validate: localizedText },
   image: { validate: text(500, true) },
   status: { validate: oneOf(['upcoming', 'past']) },
@@ -173,7 +173,7 @@ export const activitiesSchema = makeParse({
   title: { validate: localizedText, required: true },
   date: { validate: text(20), required: true },
   category: { validate: oneOf(CATEGORIES), required: true },
-  description: { validate: text(5000, true) },
+  description: { validate: localizedText },
   location: { validate: localizedText },
   images: { validate: stringList },
   volunteersInvolved: { validate: nullableInt(0) },
@@ -184,8 +184,8 @@ export const sevaCategoriesSchema = makeParse({
   title: { validate: localizedText, required: true },
   icon: { validate: text(100, true) },
   image: { validate: text(500, true) },
-  description: { validate: text(2000, true) },
-  longDescription: { validate: text(8000, true) },
+  description: { validate: localizedText },
+  longDescription: { validate: localizedText },
   activities: { validate: localizedList },
 });
 
