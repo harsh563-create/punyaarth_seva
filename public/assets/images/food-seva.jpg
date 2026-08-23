@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-  <rect width="800" height="600" fill="#e8dfd6"/>
-  <rect x="0" y="400" width="800" height="200" fill="#1a4d2e" opacity="0.15"/>
-  <circle cx="400" cy="250" r="80" fill="#1a4d2e" opacity="0.2"/>
-  <circle cx="400" cy="250" r="50" fill="#1a4d2e" opacity="0.15"/>
-  <text x="400" y="460" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" fill="#1a4d2e" opacity="0.6">Food &amp; Water Seva</text>
-  <path d="M350 200 L400 160 L450 200 L430 200 L430 240 L370 240 L370 200 Z" fill="#1a4d2e" opacity="0.25"/>
-</svg>
