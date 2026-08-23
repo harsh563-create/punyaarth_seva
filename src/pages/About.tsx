@@ -2,6 +2,7 @@ import { useInView } from 'react-intersection-observer';
 import PageHero from '@/components/ui/PageHero';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import FadeIn from '@/components/ui/FadeIn';
 import { Link } from 'react-router-dom';
 
 const values = [
@@ -147,25 +148,19 @@ export default function About() {
             subtitle="Guided by purpose, driven by compassion."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {missionPrinciples.map((principle, index) => {
-              const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-              return (
-                <div
-                  key={principle.title}
-                  ref={ref}
-                  className={`bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow transition-transform duration-500 ${
-                    inView ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="w-12 h-12 rounded-xl bg-forest/10 text-forest flex items-center justify-center mb-4">
-                    {principle.icon}
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-text">{principle.title}</h3>
-                  <p className="mt-3 text-text-muted text-sm leading-relaxed">{principle.description}</p>
+            {missionPrinciples.map((principle, index) => (
+              <FadeIn
+                key={principle.title}
+                delay={index * 100}
+                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow transition-transform duration-500"
+              >
+                <div className="w-12 h-12 rounded-xl bg-forest/10 text-forest flex items-center justify-center mb-4">
+                  {principle.icon}
                 </div>
-              );
-            })}
+                <h3 className="font-serif text-xl font-semibold text-text">{principle.title}</h3>
+                <p className="mt-3 text-text-muted text-sm leading-relaxed">{principle.description}</p>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
@@ -178,23 +173,17 @@ export default function About() {
             subtitle="The principles that guide everything we do."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => {
-              const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-              return (
-                <div
-                  key={value.title}
-                  ref={ref}
-                  className={`text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow transition-transform duration-500 hover:-translate-y-1 ${
-                    inView ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <span className="text-4xl">{value.icon}</span>
-                  <h3 className="mt-4 font-serif text-xl font-semibold text-forest">{value.title}</h3>
-                  <p className="mt-3 text-text-muted text-sm leading-relaxed">{value.description}</p>
-                </div>
-              );
-            })}
+            {values.map((value, index) => (
+              <FadeIn
+                key={value.title}
+                delay={index * 100}
+                className="text-center p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow transition-transform duration-500 hover:-translate-y-1"
+              >
+                <span className="text-4xl">{value.icon}</span>
+                <h3 className="mt-4 font-serif text-xl font-semibold text-forest">{value.title}</h3>
+                <p className="mt-3 text-text-muted text-sm leading-relaxed">{value.description}</p>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>

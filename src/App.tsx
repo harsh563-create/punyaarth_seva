@@ -13,7 +13,7 @@ import NotFound from '@/pages/NotFound';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="relative isolate min-h-screen bg-cream">
       <ScrollToTop />
       <Navbar />
       <main>

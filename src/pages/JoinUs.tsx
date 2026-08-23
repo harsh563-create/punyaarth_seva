@@ -2,6 +2,7 @@ import { useInView } from 'react-intersection-observer';
 import PageHero from '@/components/ui/PageHero';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
+import FadeIn from '@/components/ui/FadeIn';
 import { volunteerWays } from '@/data/volunteers';
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
@@ -47,29 +48,23 @@ export default function JoinUs() {
             subtitle="There are many ways to be a part of Punyaarth Seva."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {volunteerWays.map((way, index) => {
-              const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
-              return (
-                <div
-                  key={way.title}
-                  ref={ref}
-                  className={`bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow transition-transform duration-500 hover:-translate-y-1 ${
-                    inView ? 'animate-fade-in-up' : 'opacity-0'
-                  }`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="w-14 h-14 rounded-2xl bg-forest/10 text-forest flex items-center justify-center mb-5">
-                    {iconMap[way.icon]}
-                  </div>
-                  <h3 className="font-serif text-xl font-semibold text-text">
-                    {way.title}
-                  </h3>
-                  <p className="mt-3 text-text-muted leading-relaxed">
-                    {way.description}
-                  </p>
+            {volunteerWays.map((way, index) => (
+              <FadeIn
+                key={way.title}
+                delay={index * 100}
+                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow transition-transform duration-500 hover:-translate-y-1"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-forest/10 text-forest flex items-center justify-center mb-5">
+                  {iconMap[way.icon]}
                 </div>
-              );
-            })}
+                <h3 className="font-serif text-xl font-semibold text-text">
+                  {way.title}
+                </h3>
+                <p className="mt-3 text-text-muted leading-relaxed">
+                  {way.description}
+                </p>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
