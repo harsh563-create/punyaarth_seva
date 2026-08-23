@@ -58,25 +58,48 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 ${
-                    location.pathname === link.path
-                      ? 'text-forest bg-forest/10'
-                      : scrolled || !isHome
-                      ? 'text-text-light hover:text-forest hover:bg-forest/5'
-                      : 'text-text-light hover:text-forest hover:bg-forest/5'
-                  }`}
-                >
-                  {link.label}
-                  {location.pathname === link.path && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-saffron rounded-full" />
-                  )}
-                </Link>
-              ))}
+            <div className="hidden lg:flex items-center gap-0.5">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`group relative px-4 py-2 text-sm tracking-wide rounded-full transition-all duration-300 ${
+                      isActive
+                        ? 'text-forest font-semibold'
+                        : 'text-text-light font-medium hover:text-forest'
+                    }`}
+                  >
+                    {link.label}
+
+                    {/* Sliding underline track */}
+                    <span className="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] w-[calc(100%-1.5rem)] overflow-hidden rounded-full">
+                      {/* Hover line — grows in from left */}
+                      <span
+                        className={`absolute inset-y-0 left-0 w-full origin-left rounded-full bg-gradient-to-r from-saffron to-saffron-light transition-transform duration-300 ease-out ${
+                          isActive
+                            ? 'scale-x-100 opacity-0'
+                            : 'scale-x-0 opacity-70 group-hover:scale-x-100 group-hover:opacity-100'
+                        }`}
+                      />
+                      {/* Active line — gradient glow */}
+                      <span
+                        className={`absolute inset-0 rounded-full bg-gradient-to-r from-saffron via-saffron-light to-saffron shadow-[0_1px_6px_rgba(230,126,34,0.45)] transition-all duration-500 ${
+                          isActive ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
+                        }`}
+                      />
+                    </span>
+
+                    {/* Soft dot indicator for active */}
+                    <span
+                      className={`pointer-events-none absolute top-1 right-2 w-1 h-1 rounded-full bg-saffron transition-all duration-500 ${
+                        isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+                      }`}
+                    />
+                  </Link>
+                );
+              })}
             </div>
 
             {/* Desktop CTA */}
@@ -159,19 +182,29 @@ export default function Navbar() {
             </div>
             <div className="flex-1 overflow-y-auto p-6">
               <div className="flex flex-col gap-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`px-4 py-3 rounded-xl text-base font-medium transition-colors duration-300 ${
-                      location.pathname === link.path
-                        ? 'text-forest bg-forest/5'
-                        : 'text-text-light hover:text-forest hover:bg-cream'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className={`relative overflow-hidden rounded-xl text-base font-medium transition-all duration-300 ${
+                        isActive
+                          ? 'text-forest font-semibold'
+                          : 'text-text-light hover:text-forest hover:translate-x-1'
+                      }`}
+                    >
+                      <span
+                        className={`absolute left-0 top-1/2 -translate-y-1/2 h-6 w-1 rounded-full bg-gradient-to-b from-saffron to-saffron-light transition-all duration-300 ${
+                          isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0'
+                        }`}
+                      />
+                      <span className={`block px-4 py-3 transition-colors duration-300 ${isActive ? 'pl-5' : ''}`}>
+                        {link.label}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
               <div className="mt-8">
                 <Link
