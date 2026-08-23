@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import PageHero from '@/components/ui/PageHero';
 import Button from '@/components/ui/Button';
+import { useLanguage } from '@/i18n/useLanguage';
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -29,8 +31,8 @@ export default function Contact() {
   return (
     <>
       <PageHero
-        title="Get in Touch"
-        subtitle="Have a question, want to volunteer, or just want to say hello? We'd love to hear from you."
+        title={t('contactPage.heroTitle')}
+        subtitle={t('contactPage.heroSubtitle')}
       />
 
       <section className="py-20 md:py-28 bg-cream">
@@ -39,11 +41,10 @@ export default function Contact() {
             {/* Contact Info */}
             <div>
               <h2 className="font-serif text-3xl font-semibold text-text mb-6">
-                Contact Information
+                {t('contactPage.infoTitle')}
               </h2>
               <p className="text-text-muted leading-relaxed mb-10">
-                We are always happy to connect with people who share our passion
-                for seva and community service.
+                {t('contactPage.infoText')}
               </p>
 
               <div className="space-y-6">
@@ -54,7 +55,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-text">Email</h3>
+                    <h3 className="font-medium text-text">{t('contactPage.email')}</h3>
                     <p className="text-text-muted mt-1">info@punyaarthseva.org</p>
                   </div>
                 </div>
@@ -66,7 +67,7 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-text">Phone</h3>
+                    <h3 className="font-medium text-text">{t('contactPage.phone')}</h3>
                     <p className="text-text-muted mt-1">+91 XXXXX XXXXX</p>
                   </div>
                 </div>
@@ -79,8 +80,8 @@ export default function Contact() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-medium text-text">Location</h3>
-                    <p className="text-text-muted mt-1">India</p>
+                    <h3 className="font-medium text-text">{t('contactPage.location')}</h3>
+                    <p className="text-text-muted mt-1">{t('contactPage.india')}</p>
                   </div>
                 </div>
 
@@ -110,7 +111,7 @@ export default function Contact() {
                   <svg className="w-10 h-10 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                   </svg>
-                  <p className="text-sm">Map Integration</p>
+                  <p className="text-sm">{t('contactPage.mapPlaceholder')}</p>
                 </div>
               </div>
             </div>
@@ -119,19 +120,19 @@ export default function Contact() {
             <div>
               <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm">
                 <h2 className="font-serif text-2xl font-semibold text-text mb-6">
-                  Send Us a Message
+                  {t('contactPage.formTitle')}
                 </h2>
 
                 {submitted && (
                   <div className="mb-6 p-4 bg-forest/10 text-forest rounded-xl text-sm font-medium">
-                    Thank you for your message! We'll get back to you soon.
+                    {t('contactPage.successMessage')}
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-text mb-1.5">
-                      Name
+                      {t('contactPage.nameLabel')}
                     </label>
                     <input
                       type="text"
@@ -141,12 +142,12 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-cream focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest transition-colors transition-shadow text-text"
-                      placeholder="Your name"
+                      placeholder={t('contactPage.namePlaceholder')}
                     />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-text mb-1.5">
-                      Email
+                      {t('contactPage.emailLabel')}
                     </label>
                     <input
                       type="email"
@@ -161,7 +162,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-text mb-1.5">
-                      Phone (optional)
+                      {t('contactPage.phone')}
                     </label>
                     <input
                       type="tel"
@@ -175,7 +176,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-text mb-1.5">
-                      Message
+                      {t('contactPage.messageLabel')}
                     </label>
                     <textarea
                       id="message"
@@ -185,11 +186,11 @@ export default function Contact() {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-cream focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-forest transition-colors transition-shadow text-text resize-none"
-                      placeholder="Your message..."
+                      placeholder={t('contactPage.messagePlaceholder')}
                     />
                   </div>
                   <Button type="submit" variant="primary" className="w-full">
-                    Send Message
+                    {t('contactPage.sendButton')}
                   </Button>
                 </form>
               </div>

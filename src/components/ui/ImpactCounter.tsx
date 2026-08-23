@@ -3,6 +3,7 @@ import { useCounter } from '@/hooks/useCounter';
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { ImpactStat } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
 interface ImpactCounterProps {
   stat: ImpactStat;
@@ -35,6 +36,7 @@ const iconMap: Record<string, ReactNode> = {
 export default function ImpactCounter({ stat, index }: ImpactCounterProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
   const { count, start } = useCounter(stat.value, 2500);
+  const { tr } = useLanguage();
 
   useEffect(() => {
     if (inView) start();
@@ -55,7 +57,7 @@ export default function ImpactCounter({ stat, index }: ImpactCounterProps) {
         {count}
         {stat.suffix}
       </div>
-      <div className="mt-2 text-text-muted font-medium">{stat.label}</div>
+      <div className="mt-2 text-text-muted font-medium">{tr(stat.label)}</div>
     </div>
   );
 }

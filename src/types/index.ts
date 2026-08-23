@@ -1,10 +1,17 @@
+export type Lang = 'en' | 'hi';
+
+export interface LocalizedText {
+  en: string;
+  hi: string;
+}
+
 export interface Activity {
   id: string;
-  title: string;
-  description: string;
-  longDescription: string;
+  title: LocalizedText;
+  description: LocalizedText;
+  longDescription: LocalizedText;
   date: string;
-  location: string;
+  location: LocalizedText;
   category: ActivityCategory;
   images: string[];
   volunteersInvolved?: number;
@@ -22,10 +29,10 @@ export type ActivityCategory =
 
 export interface Event {
   id: string;
-  title: string;
-  description: string;
+  title: LocalizedText;
+  description: LocalizedText;
   date: string;
-  location: string;
+  location: LocalizedText;
   image: string;
   status: 'upcoming' | 'past';
   volunteersNeeded?: number;
@@ -34,7 +41,7 @@ export interface Event {
 
 export interface ImpactStat {
   id: string;
-  label: string;
+  label: LocalizedText;
   value: number;
   suffix: string;
   icon: string;
@@ -42,25 +49,25 @@ export interface ImpactStat {
 
 export interface SevaCategory {
   id: string;
-  title: string;
-  description: string;
-  longDescription: string;
+  title: LocalizedText;
+  description: LocalizedText;
+  longDescription: LocalizedText;
   icon: string;
   image: string;
-  activities: string[];
+  activities: LocalizedText[];
 }
 
 export interface GalleryImage {
   id: string;
   src: string;
-  alt: string;
+  alt: LocalizedText;
   category: ActivityCategory;
   date: string;
 }
 
 export interface VolunteerWay {
-  title: string;
-  description: string;
+  title: LocalizedText;
+  description: LocalizedText;
   icon: string;
 }
 

@@ -6,21 +6,20 @@ import Modal from '@/components/ui/Modal';
 import { galleryImages } from '@/data/gallery';
 import { activities } from '@/data/activities';
 import type { GalleryImage } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
-const filters = [
-  { id: 'all', label: 'All' },
-  { id: 'food-seva', label: 'Food Seva' },
-  { id: 'nature', label: 'Nature' },
-  { id: 'animals', label: 'Animals' },
-  { id: 'community', label: 'Community' },
-  { id: 'events', label: 'Events' },
-  { id: 'awareness', label: 'Awareness' },
-];
+const filterIds = ['all', 'food-seva', 'nature', 'animals', 'community', 'events', 'awareness'] as const;
 
 export default function Activities() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
+  const { t, tr, locale } = useLanguage();
+
+  const filters = useMemo(
+    () => filterIds.map((id) => ({ id, label: t(`common.categories.${id}`) })),
+    [t]
+  );
 
   const filteredActivities = useMemo(() => {
     if (activeFilter === 'all') return activities;
@@ -37,8 +36,8 @@ export default function Activities() {
   return (
     <>
       <PageHero
-        title="Activities & Gallery"
-        subtitle="A visual journey through our seva activities and the moments that define our mission."
+        title={t('activitiesPage.heroTitle')}
+        subtitle={t('activitiesPage.heroSubtitle')}
       />
 
       {/* Filter & Grid */}
@@ -55,7 +54,7 @@ export default function Activities() {
           {/* Activity Cards */}
           <div className="mb-16">
             <h3 className="font-serif text-2xl font-semibold text-text mb-8">
-              Activities
+              {t('activitiesPage.activitiesHeading')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredActivities.map((activity, index) => (
@@ -68,24 +67,24 @@ export default function Activities() {
                   <div className="relative h-48 overflow-hidden">
                     <img
                       src={activity.images[0]}
-                      alt={activity.title}
+                      alt={tr(activity.title)}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    <div className="absolute top-3 left-3 bg-white/90 text-forest text-xs font-medium px-3 py-1 rounded-full capitalize">
-                      {activity.category.replace('-', ' ')}
+                    <div className="absolute top-3 left-3 bg-white/90 text-forest text-xs font-medium px-3 py-1 rounded-full">
+                      {t(`common.categories.${activity.category}`)}
                     </div>
                   </div>
                   <div className="p-5">
                     <h4 className="font-serif text-lg font-semibold text-text group-hover:text-forest transition-colors">
-                      {activity.title}
+                      {tr(activity.title)}
                     </h4>
                     <div className="mt-2 flex items-center gap-4 text-text-muted text-xs">
                       <span className="flex items-center gap-1">
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        {new Date(activity.date).toLocaleDateString('en-US', {
+                        {new Date(activity.date).toLocaleDateString(locale, {
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
@@ -96,11 +95,11 @@ export default function Activities() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        {activity.location}
+                        {tr(activity.location)}
                       </span>
                     </div>
                     <p className="mt-3 text-text-muted text-sm line-clamp-2">
-                      {activity.description}
+                      {tr(activity.description)}
                     </p>
                   </div>
                 </button>
@@ -111,7 +110,7 @@ export default function Activities() {
           {/* Gallery Grid */}
           <div>
             <h3 className="font-serif text-2xl font-semibold text-text mb-8">
-              Photo Gallery
+              {t('activitiesPage.galleryHeading')}
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredImages.map((image) => (
@@ -132,13 +131,13 @@ export default function Activities() {
           <div className="p-2">
             <img
               src={selectedImage.src}
-              alt={selectedImage.alt}
+              alt={tr(selectedImage.alt)}
               className="w-full h-auto max-h-[70vh] object-contain rounded-xl"
             />
             <div className="p-4">
-              <p className="text-text font-medium">{selectedImage.alt}</p>
+              <p className="text-text font-medium">{tr(selectedImage.alt)}</p>
               <p className="text-text-muted text-sm mt-1">
-                {new Date(selectedImage.date).toLocaleDateString('en-US', {
+                {new Date(selectedImage.date).toLocaleDateString(locale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -158,16 +157,16 @@ export default function Activities() {
           <div>
             <img
               src={activeActivity.images[0]}
-              alt={activeActivity.title}
+              alt={tr(activeActivity.title)}
               className="w-full h-64 object-cover"
             />
             <div className="p-6 md:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <span className="bg-forest/10 text-forest text-xs font-medium px-3 py-1 rounded-full capitalize">
-                  {activeActivity.category.replace('-', ' ')}
+                <span className="bg-forest/10 text-forest text-xs font-medium px-3 py-1 rounded-full">
+                  {t(`common.categories.${activeActivity.category}`)}
                 </span>
                 <span className="text-text-muted text-sm">
-                  {new Date(activeActivity.date).toLocaleDateString('en-US', {
+                  {new Date(activeActivity.date).toLocaleDateString(locale, {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
@@ -175,7 +174,7 @@ export default function Activities() {
                 </span>
               </div>
               <h3 className="font-serif text-2xl md:text-3xl font-semibold text-text">
-                {activeActivity.title}
+                {tr(activeActivity.title)}
               </h3>
               <div className="mt-4 flex items-center gap-6 text-text-muted text-sm">
                 <span className="flex items-center gap-1">
@@ -183,19 +182,19 @@ export default function Activities() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  {activeActivity.location}
+                  {tr(activeActivity.location)}
                 </span>
                 {activeActivity.volunteersInvolved && (
                   <span className="flex items-center gap-1">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    {activeActivity.volunteersInvolved} volunteers
+                    {activeActivity.volunteersInvolved} {t('common.volunteers')}
                   </span>
                 )}
               </div>
               <p className="mt-6 text-text-muted leading-relaxed">
-                {activeActivity.longDescription}
+                {tr(activeActivity.longDescription)}
               </p>
             </div>
           </div>

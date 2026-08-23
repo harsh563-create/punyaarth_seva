@@ -1,22 +1,66 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
+import { useLanguage } from '@/i18n/useLanguage';
 
 const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/seva', label: 'Our Seva' },
-  { path: '/activities', label: 'Activities' },
-  { path: '/events', label: 'Events' },
-  { path: '/join', label: 'Join Us' },
-  { path: '/contact', label: 'Contact' },
-];
+  { path: '/', label: 'nav.home' },
+  { path: '/about', label: 'nav.about' },
+  { path: '/seva', label: 'nav.seva' },
+  { path: '/activities', label: 'nav.activities' },
+  { path: '/events', label: 'nav.events' },
+  { path: '/join', label: 'nav.join' },
+  { path: '/contact', label: 'nav.contact' },
+] as const;
+
+function LanguageToggle({ compact = false }: { compact?: boolean }) {
+  const { lang, setLang } = useLanguage();
+  const options = [
+    { id: 'en', label: 'EN' },
+    { id: 'hi', label: 'हिं' },
+  ] as const;
+  const activeIndex = options.findIndex((o) => o.id === lang);
+
+  return (
+    <div
+      className={`relative inline-flex items-center rounded-full border border-forest/15 bg-white/70 backdrop-blur p-0.5 shadow-sm ${
+        compact ? '' : ''
+      }`}
+      role="group"
+      aria-label="Language / भाषा"
+    >
+      <span
+        className="absolute top-0.5 bottom-0.5 left-0.5 rounded-full bg-forest shadow-sm transition-transform duration-300 ease-out"
+        style={{
+          width: 'calc(50% - 2px)',
+          transform: `translateX(${activeIndex * 100}%)`,
+        }}
+      />
+      {options.map((option) => (
+        <button
+          key={option.id}
+          type="button"
+          onClick={() => setLang(option.id)}
+          className={`relative z-10 w-10 py-1 text-xs font-semibold tracking-wide rounded-full transition-colors duration-300 cursor-pointer ${
+            lang === option.id
+              ? 'text-text-on-dark'
+              : 'text-text-light hover:text-forest'
+          }`}
+          aria-pressed={lang === option.id}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { isOpen, toggle, close } = useMobileMenu();
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -71,7 +115,7 @@ export default function Navbar() {
                         : 'text-text-light font-medium hover:text-forest'
                     }`}
                   >
-                    {link.label}
+                    {t(link.label)}
 
                     {/* Sliding underline track */}
                     <span className="pointer-events-none absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] w-[calc(100%-1.5rem)] overflow-hidden rounded-full">
@@ -102,13 +146,14 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:block">
+            {/* Desktop actions */}
+            <div className="hidden lg:flex items-center gap-3">
+              <LanguageToggle />
               <Link
                 to="/join"
                 className="inline-flex items-center gap-2 bg-forest text-text-on-dark px-6 py-2.5 rounded-full text-sm font-medium hover:bg-forest-light transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
-                Join Us
+                {t('navbar.joinCta')}
               </Link>
             </div>
 
@@ -181,6 +226,9 @@ export default function Navbar() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-6">
+              <div className="mb-5">
+                <LanguageToggle />
+              </div>
               <div className="flex flex-col gap-1">
                 {navLinks.map((link) => {
                   const isActive = location.pathname === link.path;
@@ -200,7 +248,7 @@ export default function Navbar() {
                         }`}
                       />
                       <span className={`block px-4 py-3 transition-colors duration-300 ${isActive ? 'pl-5' : ''}`}>
-                        {link.label}
+                        {t(link.label)}
                       </span>
                     </Link>
                   );
@@ -212,14 +260,12 @@ export default function Navbar() {
                   className="flex items-center justify-center gap-2 bg-forest text-text-on-dark px-6 py-3 rounded-full text-base font-medium hover:bg-forest-light transition-colors w-full"
                   onClick={close}
                 >
-                  Join Our Seva
+                  {t('navbar.joinMobile')}
                 </Link>
               </div>
             </div>
             <div className="p-6 border-t border-beige">
-              <p className="text-xs text-text-muted text-center">
-                Seva for Humanity, Nature & Every Life
-              </p>
+              <p className="text-xs text-text-muted text-center">{t('navbar.brandTagline')}</p>
             </div>
           </div>
         </div>
