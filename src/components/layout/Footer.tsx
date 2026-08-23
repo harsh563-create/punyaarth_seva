@@ -29,12 +29,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <svg className="w-9 h-9" viewBox="0 0 40 40" fill="none">
-                <circle cx="20" cy="20" r="19" fill="#e67e22" />
-                <path d="M20 10 C15 10, 11 16, 13 21 C15 26, 18 26, 20 32 C22 26, 25 26, 27 21 C29 16, 25 10, 20 10Z" fill="#faf8f5" />
-                <circle cx="14" cy="26" r="2.5" fill="#1a4d2e" opacity="0.6" />
-                <circle cx="26" cy="26" r="2.5" fill="#1a4d2e" opacity="0.6" />
-              </svg>
+              <img
+                src="/assets/images/img2.jpg"
+                alt="Punyaarth Seva logo"
+                className="w-9 h-9 rounded-full object-cover ring-1 ring-white/20"
+              />
               <span className="font-serif text-xl font-semibold text-text-on-dark">Punyaarth Seva</span>
             </Link>
             <p className="text-text-on-dark/70 text-sm leading-relaxed">Seva for Humanity, Nature & Every Life.</p>

@@ -43,29 +43,11 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative">
-                <svg
-                  className="w-9 h-9 md:w-10 md:h-10"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="20"
-                    cy="20"
-                    r="19"
-                    className={`transition-colors duration-300 ${
-                      scrolled || !isHome ? 'fill-forest' : 'fill-cream'
-                    }`}
-                  />
-                  <path
-                    d="M20 10 C15 10, 11 16, 13 21 C15 26, 18 26, 20 32 C22 26, 25 26, 27 21 C29 16, 25 10, 20 10Z"
-                    className="fill-cream"
-                  />
-                  <circle cx="14" cy="26" r="2.5" className="fill-saffron" opacity="0.8" />
-                  <circle cx="26" cy="26" r="2.5" className="fill-saffron" opacity="0.8" />
-                </svg>
-              </div>
+              <img
+                src="/assets/images/img2.jpg"
+                alt="Punyaarth Seva logo"
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover ring-1 ring-black/10 shadow-sm transition-transform duration-300 group-hover:scale-105"
+              />
               <span
                 className={`font-serif text-lg md:text-xl font-semibold transition-colors duration-300 ${
                   scrolled || !isHome ? 'text-forest' : 'text-forest'
