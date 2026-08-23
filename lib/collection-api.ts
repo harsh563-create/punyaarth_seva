@@ -92,6 +92,35 @@ function oneOf(options: readonly string[]): Validator {
   };
 }
 
+/** Digits-only value of 10–13 characters (allows +91 style input). */
+const phone: Validator = (v) => {
+  if (typeof v !== 'string' || !v.trim()) fail('Mobile number is required');
+  const digits = v.replace(/\D/g, '');
+  if (digits.length < 10 || digits.length > 13) {
+    fail('Enter a valid mobile number');
+  }
+  return digits;
+};
+
+/** Alphanumeric bank reference such as a 12-digit UTR. */
+const transactionRef: Validator = (v) => {
+  const t = typeof v === 'string' ? v.trim() : '';
+  if (!/^[A-Za-z0-9-]{4,60}$/.test(t)) {
+    fail('Enter a valid UTR / transaction reference');
+  }
+  return t;
+};
+
+/** Strict-ish VPA check, e.g. "punyaarthseva@upi". Empty allowed (unset). */
+export const upiId: Validator = (v) => {
+  const t = typeof v === 'string' ? v.trim().toLowerCase() : '';
+  if (!t) return '';
+  if (!/^[a-z0-9._-]{2,64}@[a-z]{2,32}$/.test(t)) {
+    fail('Enter a valid UPI ID (e.g. yourname@upi)');
+  }
+  return t;
+};
+
 const localizedList: Validator = (v) => {
   if (!Array.isArray(v)) fail('Expected a list of localized text entries');
   return v.map(localizedText);
@@ -174,6 +203,32 @@ export const impactStatsSchema = makeParse({
   icon: { validate: text(100, true) },
 });
 
+/** Public donor payment confirmation (POST /api/donations). */
+export const donationSubmissionSchema = makeParse({
+  donorName: { validate: text(120), required: true },
+  mobile: { validate: phone, required: true },
+  amount: { validate: integer(1), required: true },
+  utr: { validate: transactionRef, required: true },
+  screenshot: { validate: text(500, true) },
+});
+
+/** Admin-only status changes (PATCH /api/donations/[id]). */
+export const donationUpdateSchema = makeParse({
+  status: { validate: oneOf(['pending', 'verified']) },
+});
+
+/** Donation page configuration (PUT /api/donation-settings). */
+export const donationSettingsSchema = makeParse({
+  upiId: { validate: upiId },
+  payeeName: { validate: text(120, true) },
+  qrImage: { validate: text(500, true) },
+  orgName: { validate: text(160, true) },
+  registrationDetails: { validate: text(400, true) },
+  taxExemptionDetails: { validate: text(400, true) },
+  contactEmail: { validate: text(160, true) },
+  contactPhone: { validate: text(40, true) },
+});
+
 // ----------------------------------------------------------- route maker --
 
 /** Strip DB-only columns so returned rows match the TypeScript types. */
@@ -183,13 +238,13 @@ function cleanRow(row: Record<string, unknown>): Record<string, unknown> {
   return rest;
 }
 
-async function requireAdmin(): Promise<void> {
+export async function requireAdmin(): Promise<void> {
   if (!(await isAdminAuthenticated())) {
     throw new ApiError(401, 'Admin authentication required.');
   }
 }
 
-async function readJsonBody(request: Request): Promise<unknown> {
+export async function readJsonBody(request: Request): Promise<unknown> {
   try {
     return await request.json();
   } catch {
@@ -197,7 +252,7 @@ async function readJsonBody(request: Request): Promise<unknown> {
   }
 }
 
-function handleError(error: unknown): Response {
+export function handleError(error: unknown): Response {
   if (error instanceof ApiError) {
     return Response.json({ error: error.message }, { status: error.status });
   }
@@ -216,7 +271,8 @@ function assertConfigured(): void {
   }
 }
 
-function client() {
+/** Configured service-role client; throws 503 when Supabase is unset. */
+export function client() {
   assertConfigured();
   return getSupabase();
 }

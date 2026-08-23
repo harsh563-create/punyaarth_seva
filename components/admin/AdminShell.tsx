@@ -15,10 +15,12 @@ import {
   LeafIcon,
   LogoutIcon,
   MenuIcon,
+  RupeeIcon,
 } from './icons';
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: DashboardIcon },
+  { href: '/admin/donations', label: 'Donations', icon: RupeeIcon },
   { href: '/admin/events', label: 'Events', icon: CalendarIcon },
   { href: '/admin/activities', label: 'Activities', icon: HeartHandshakeIcon },
   { href: '/admin/seva', label: 'Seva Categories', icon: LeafIcon },

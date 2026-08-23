@@ -7,6 +7,8 @@ import {
 } from '@/data';
 import type {
   Activity,
+  Donation,
+  DonationSettings,
   Event,
   GalleryImage,
   ImpactStat,
@@ -26,7 +28,20 @@ const TABLES = {
   sevaCategories: 'seva_categories',
   galleryImages: 'gallery_images',
   impactStats: 'impact_stats',
+  donations: 'donations',
 } as const;
+
+/** Empty defaults — real UPI/QR values are set from the admin panel only. */
+export const DEFAULT_DONATION_SETTINGS: DonationSettings = {
+  upiId: '',
+  payeeName: '',
+  qrImage: '',
+  orgName: 'Punyaarth Seva Samiti',
+  registrationDetails: '',
+  taxExemptionDetails: '',
+  contactEmail: '',
+  contactPhone: '',
+};
 
 let warned = false;
 
@@ -75,4 +90,44 @@ export function getGalleryImages(): Promise<GalleryImage[]> {
 
 export function getImpactStats(): Promise<ImpactStat[]> {
   return fetchTable<ImpactStat>(TABLES.impactStats, staticImpact);
+}
+
+/** Donation page configuration; empty strings mean "not configured yet". */
+export async function getDonationSettings(): Promise<DonationSettings> {
+  if (!isSupabaseConfigured()) return DEFAULT_DONATION_SETTINGS;
+  try {
+    const { data } = await getSupabase()
+      .from('donation_settings')
+      .select('*')
+      .eq('id', 'default')
+      .maybeSingle();
+    if (!data) return DEFAULT_DONATION_SETTINGS;
+    const { created_at: _created, id: _id, ...rest } = data;
+    void _created;
+    void _id;
+    return { ...DEFAULT_DONATION_SETTINGS, ...(rest as Partial<DonationSettings>) };
+  } catch (error) {
+    console.error('[data] Failed to load donation settings:', error);
+    return DEFAULT_DONATION_SETTINGS;
+  }
+}
+
+/** Donor submissions, newest first. Admin-only consumers. */
+export async function getDonations(): Promise<Donation[]> {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const { data, error } = await getSupabase()
+      .from(TABLES.donations)
+      .select('*')
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
+    if (error) throw error;
+    return (data ?? []).map((row) => ({
+      ...row,
+      createdAt: row.created_at,
+    }));
+  } catch (error) {
+    console.error('[data] Failed to load donations:', error);
+    return [];
+  }
 }

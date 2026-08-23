@@ -12,6 +12,7 @@ const navLinks = [
   { path: '/seva', label: 'nav.seva' },
   { path: '/activities', label: 'nav.activities' },
   { path: '/events', label: 'nav.events' },
+  { path: '/donate', label: 'nav.donate' },
   { path: '/join', label: 'nav.join' },
   { path: '/contact', label: 'nav.contact' },
 ] as const;

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import {
   getActivities,
+  getDonationSettings,
+  getDonations,
   getEvents,
   getGalleryImages,
   getImpactStats,
@@ -13,18 +15,26 @@ import {
   ImageIcon,
   LeafIcon,
   PlusIcon,
+  RupeeIcon,
   UsersIcon,
 } from '@/components/admin/icons';
 
 export default async function AdminDashboardPage() {
-  const [events, activities, sevaCategories, galleryImages, impactStats] =
+  const [events, activities, sevaCategories, galleryImages, impactStats, donations, donationSettings] =
     await Promise.all([
       getEvents(),
       getActivities(),
       getSevaCategories(),
       getGalleryImages(),
       getImpactStats(),
+      getDonations(),
+      getDonationSettings(),
     ]);
+
+  const pendingDonations = donations.filter((d) => d.status === 'pending');
+  const verifiedTotal = donations
+    .filter((d) => d.status === 'verified')
+    .reduce((sum, d) => sum + d.amount, 0);
 
   const today = new Date().toISOString().slice(0, 10);
   const upcomingEvents = events.filter(
@@ -37,6 +47,18 @@ export default async function AdminDashboardPage() {
   );
 
   const stats = [
+    {
+      label: 'Pending Donations',
+      value: pendingDonations.length,
+      icon: RupeeIcon,
+      href: '/admin/donations',
+    },
+    {
+      label: 'Verified Funds (₹)',
+      value: verifiedTotal.toLocaleString('en-IN'),
+      icon: RupeeIcon,
+      href: '/admin/donations',
+    },
     {
       label: 'Upcoming Events',
       value: upcomingEvents.length,
@@ -198,6 +220,7 @@ export default async function AdminDashboardPage() {
           </h3>
           <ul className="space-y-2">
             {[
+              { href: '/admin/donations', label: 'Review donation submissions' },
               { href: '/admin/events', label: 'Add new event' },
               { href: '/admin/gallery', label: 'Upload gallery photos' },
               { href: '/admin/impact', label: 'Update impact numbers' },

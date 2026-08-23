@@ -65,6 +65,32 @@ export interface GalleryImage {
   date: string;
 }
 
+export type DonationStatus = 'pending' | 'verified';
+
+export interface Donation {
+  id: string;
+  donorName: string;
+  mobile: string;
+  amount: number;
+  utr: string;
+  /** Storage path of the optional payment screenshot (private bucket). */
+  screenshot?: string;
+  status: DonationStatus;
+  createdAt?: string;
+}
+
+/** UPI + organization details shown on the donation page. Admin-editable. */
+export interface DonationSettings {
+  upiId: string;
+  payeeName: string;
+  qrImage: string;
+  orgName: string;
+  registrationDetails: string;
+  taxExemptionDetails: string;
+  contactEmail: string;
+  contactPhone: string;
+}
+
 export interface VolunteerWay {
   title: LocalizedText;
   description: LocalizedText;
