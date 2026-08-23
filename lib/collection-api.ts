@@ -191,6 +191,7 @@ export const activitiesSchema = makeParse({
   description: { validate: localizedText },
   location: { validate: localizedText },
   images: { validate: stringList },
+  videos: { validate: stringList },
   volunteersInvolved: { validate: nullableInt(0) },
   featured: { validate: boolean },
 });

@@ -24,6 +24,7 @@ export interface FieldDef {
   /** Renders EN + HI inputs and stores a { en, hi } object. */
   localized?: boolean;
   placeholder?: string;
+  hint?: string;
   wide?: boolean;
 }
 
@@ -712,11 +713,13 @@ function SingleInput({
                   .filter(Boolean)
               )
             }
-            placeholder={'One entry per line\n/assets/images/photo.jpg'}
+            placeholder={
+              field.placeholder ?? 'One entry per line\n/assets/images/photo.jpg'
+            }
             className={`${inputClasses('lines')} resize-y`}
           />
           <p className="mt-1 font-sans text-xs text-text-muted">
-            One entry per line.
+            {field.hint ?? 'One entry per line.'}
           </p>
         </>
       );

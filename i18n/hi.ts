@@ -144,6 +144,15 @@ const hi: Dictionary = {
     activitiesHeading: 'गतिविधियाँ',
     galleryHeading: 'फोटो गैलरी',
   },
+  activityDetail: {
+    backToActivities: 'सभी गतिविधियाँ',
+    storyTitle: 'इस गतिविधि के बारे में',
+    photosTitle: 'तस्वीरें',
+    videosTitle: 'वीडियो',
+    notFoundTitle: 'गतिविधि नहीं मिली',
+    notFoundText: 'आप जिस गतिविधि को खोज रहे हैं वह मौजूद नहीं है या हटा दी गई होगी।',
+    volunteersSuffix: 'स्वयंसेवक जुड़े',
+  },
   eventsPage: {
     heroTitle: 'सेवा और सामुदायिक आयोजन',
     heroSubtitle: 'सार्थक सामुदायिक आयोजनों और सेवा गतिविधियों के माध्यम से बदलाव लाने में हमारे साथ जुड़ें।',

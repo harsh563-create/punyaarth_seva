@@ -33,6 +33,8 @@ create table if not exists public.activities (
                           'all', 'food-seva', 'nature', 'animals',
                           'community', 'events', 'awareness')),
   images                jsonb not null default '[]',
+  videos                jsonb not null default '[]',
+  "longDescription"     jsonb not null default '{"en":"","hi":""}',
   "volunteersInvolved"  integer,
   featured              boolean not null default false,
   created_at            timestamptz not null default now()

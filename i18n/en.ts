@@ -144,6 +144,16 @@ const en = {
     activitiesHeading: 'Activities',
     galleryHeading: 'Photo Gallery',
   },
+  activityDetail: {
+    backToActivities: 'All Activities',
+    storyTitle: 'About this Activity',
+    photosTitle: 'Photos',
+    videosTitle: 'Videos',
+    notFoundTitle: 'Activity Not Found',
+    notFoundText:
+      "The activity you're looking for doesn't exist or may have been removed.",
+    volunteersSuffix: 'volunteers joined',
+  },
   eventsPage: {
     heroTitle: 'Seva & Community Events',
     heroSubtitle:

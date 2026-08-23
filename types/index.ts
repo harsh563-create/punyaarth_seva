@@ -14,6 +14,8 @@ export interface Activity {
   location: LocalizedText;
   category: ActivityCategory;
   images: string[];
+  /** Video links — YouTube URLs are embedded, direct files play inline. */
+  videos?: string[];
   volunteersInvolved?: number;
   featured?: boolean;
 }

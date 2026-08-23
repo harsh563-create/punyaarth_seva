@@ -41,6 +41,15 @@ const fields: FieldDef[] = [
     wide: true,
     placeholder: '/assets/images/photo-1.jpg\n/assets/images/photo-2.jpg',
   },
+  {
+    name: 'videos',
+    label: 'Videos',
+    type: 'lines',
+    wide: true,
+    placeholder:
+      'https://www.youtube.com/watch?v=VIDEO_ID\nhttps://youtu.be/VIDEO_ID\nhttps://example.com/video.mp4',
+    hint: 'One per line — a YouTube link becomes an embedded player, a direct .mp4/.webm URL plays inline.',
+  },
 ];
 
 const columns: ColumnDef[] = [
@@ -57,6 +66,7 @@ const columns: ColumnDef[] = [
     },
   },
   { header: 'Photos', cell: { kind: 'count', field: 'images' } },
+  { header: 'Videos', cell: { kind: 'count', field: 'videos' } },
 ];
 
 export default async function AdminActivitiesPage() {
@@ -65,7 +75,7 @@ export default async function AdminActivitiesPage() {
     <CollectionManager
       title="Activities"
       singular="activity"
-      description="Completed seva activities with their photos and categories."
+      description="Completed seva activities with their photos, videos and categories."
       fields={fields}
       columns={columns}
       initialItems={initialActivities}
