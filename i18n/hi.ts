@@ -154,8 +154,19 @@ const hi: Dictionary = {
     noUpcoming: 'इस समय कोई आगामी आयोजन नहीं है। शीघ्र ही फिर देखें!',
   },
   eventCard: {
-    joined: 'जुड़े',
+    joined: 'स्वयंसेवक',
     needed: 'आवश्यक',
+  },
+  eventDetail: {
+    backToEvents: 'सभी आयोजनों पर वापस',
+    aboutTitle: 'इस आयोजन के बाद में',
+    locationLabel: 'स्थान',
+    dateLabel: 'दिनांक',
+    volunteersLabel: 'स्वयंसेवक',
+    completedBadge: 'संपन्न',
+    joinCta: 'इस आयोजन में जुड़ें',
+    donateCta: 'हमारी सेवा में सहयोग करें',
+    notFound: 'यह आयोजन नहीं मिला।',
   },
   joinPage: {
     heroTitle: 'आपका समय किसी की उम्मीद बन सकता है।',

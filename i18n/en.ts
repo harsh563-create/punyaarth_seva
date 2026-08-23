@@ -159,6 +159,17 @@ const en = {
     joined: 'joined',
     needed: 'needed',
   },
+  eventDetail: {
+    backToEvents: 'Back to Events',
+    aboutTitle: 'About this Event',
+    locationLabel: 'Location',
+    dateLabel: 'Date',
+    volunteersLabel: 'Volunteers',
+    completedBadge: 'Completed',
+    joinCta: 'Join This Event',
+    donateCta: 'Support Our Seva',
+    notFound: 'This event could not be found.',
+  },
   joinPage: {
     heroTitle: 'Your Time Can Become Someone\u2019s Hope.',
     heroSubtitle: 'Anyone can contribute. Find the way that works best for you.',

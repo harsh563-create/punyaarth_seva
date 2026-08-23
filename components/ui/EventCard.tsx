@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useInView } from 'react-intersection-observer';
 import type { Event } from '@/types';
 import { useLanguage } from '@/i18n/useLanguage';
@@ -100,9 +101,12 @@ export default function EventCard({ event, index }: EventCardProps) {
             </div>
           </div>
         )}
-        <button className="mt-4 text-forest font-medium text-sm hover:text-forest-light transition-colors cursor-pointer">
+        <Link
+          href={`/events/${event.id}`}
+          className="mt-4 inline-block text-forest font-medium text-sm hover:text-forest-light transition-colors cursor-pointer"
+        >
           {isUpcoming ? t('common.joinEvent') : t('common.viewDetails')} →
-        </button>
+        </Link>
       </div>
     </div>
   );
