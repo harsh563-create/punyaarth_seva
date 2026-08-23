@@ -12,10 +12,44 @@ const navLinks = [
   { path: '/seva', label: 'nav.seva' },
   { path: '/activities', label: 'nav.activities' },
   { path: '/events', label: 'nav.events' },
-  { path: '/donate', label: 'nav.donate' },
-  { path: '/join', label: 'nav.join' },
   { path: '/contact', label: 'nav.contact' },
 ] as const;
+
+function DonateCta({
+  className = '',
+  compact = false,
+  onClick,
+}: {
+  className?: string;
+  compact?: boolean;
+  onClick?: () => void;
+}) {
+  const { t } = useLanguage();
+  return (
+    <Link
+      href="/donate"
+      onClick={onClick}
+      className={`group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-semibold text-white shadow-lg shadow-saffron/40 ring-1 ring-white/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-saffron/50 ${
+        compact ? 'px-5 py-2.5 text-sm' : 'w-full px-6 py-3.5 text-base'
+      } ${className}`}
+    >
+      {/* gradient base */}
+      <span className="absolute inset-0 bg-gradient-to-r from-saffron-dark via-saffron to-saffron-light" />
+      {/* sheen sweep on hover */}
+      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+      <HeartIcon className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+      <span className="relative z-10 tracking-wide">{t('navbar.donateCta')}</span>
+    </Link>
+  );
+}
+
+function HeartIcon({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+  );
+}
 
 function LanguageToggle({ compact = false }: { compact?: boolean }) {
   const { lang, setLang } = useLanguage();
@@ -153,6 +187,7 @@ export default function Navbar() {
             {/* Desktop actions */}
             <div className="hidden lg:flex items-center gap-3">
               <LanguageToggle />
+              <DonateCta compact />
               <Link
                 href="/join"
                 className="inline-flex items-center gap-2 bg-forest text-text-on-dark px-6 py-2.5 rounded-full text-sm font-medium hover:bg-forest-light transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
@@ -258,10 +293,11 @@ export default function Navbar() {
                   );
                 })}
               </div>
-              <div className="mt-8">
+              <div className="mt-8 space-y-3">
+                <DonateCta onClick={close} />
                 <Link
                   href="/join"
-                  className="flex items-center justify-center gap-2 bg-forest text-text-on-dark px-6 py-3 rounded-full text-base font-medium hover:bg-forest-light transition-colors w-full"
+                  className="flex items-center justify-center gap-2 rounded-full border-2 border-forest bg-transparent px-6 py-3 text-base font-medium text-forest transition-colors hover:bg-forest-muted w-full"
                   onClick={close}
                 >
                   {t('navbar.joinMobile')}

@@ -12,6 +12,7 @@ const en = {
   navbar: {
     joinCta: 'Join Us',
     joinMobile: 'Join Our Seva',
+    donateCta: 'Donate Now',
     brandTagline: 'Seva for Humanity, Nature & Every Life',
   },
   footer: {

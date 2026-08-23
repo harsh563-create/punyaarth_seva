@@ -14,6 +14,7 @@ const hi: Dictionary = {
   navbar: {
     joinCta: 'जुड़ें',
     joinMobile: 'हमारी सेवा में जुड़ें',
+    donateCta: 'दान करें',
     brandTagline: 'मानवता, प्रकृति और हर जीवन के लिए सेवा',
   },
   footer: {
