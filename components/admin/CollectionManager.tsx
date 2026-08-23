@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Modal from '@/components/ui/Modal';
-import type { LocalizedText } from '@/types';
+import type { LocalizedText, MediaAsset } from '@/types';
+import { mediaThumb, youtubeId } from '@/lib/media';
 import { Badge, LocalizedCell, MutedText, Thumb } from './ui';
 import { EditIcon, PlusIcon, SearchIcon, TrashIcon } from './icons';
 
@@ -14,6 +15,7 @@ export type FieldType =
   | 'select'
   | 'image'
   | 'lines'
+  | 'media'
   | 'boolean';
 
 export interface FieldDef {
@@ -21,6 +23,8 @@ export interface FieldDef {
   label: string;
   type: FieldType;
   options?: string[];
+  /** For type 'media': which library kind the picker shows. */
+  mediaKind?: 'image' | 'video';
   /** Renders EN + HI inputs and stores a { en, hi } object. */
   localized?: boolean;
   placeholder?: string;
@@ -624,8 +628,181 @@ export default function CollectionManager<T extends Row>({
 
 function inputClasses(type: FieldType): string {
   return `w-full rounded-xl border border-beige-dark bg-white px-3.5 py-2 font-sans text-sm text-text placeholder:text-text-muted/60 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest-muted ${
-    type === 'textarea' || type === 'lines' ? 'min-h-[90px]' : ''
+    type === 'textarea' || type === 'lines' || type === 'media'
+      ? 'min-h-[90px]'
+      : ''
   }`;
+}
+
+/** Modal grid of library assets; clicking one appends its URL. */
+function MediaPickerModal({
+  kind,
+  open,
+  onClose,
+  onPick,
+}: {
+  kind: 'image' | 'video';
+  open: boolean;
+  onClose: () => void;
+  onPick: (url: string) => void;
+}) {
+  const [assets, setAssets] = useState<MediaAsset[] | null>(null);
+  const [error, setError] = useState('');
+
+  function handleOpen() {
+    setAssets(null);
+    setError('');
+    fetch('/api/media')
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Library unavailable (${res.status}).`);
+        const data = (await res.json()) as { items?: MediaAsset[] };
+        setAssets((data.items ?? []).filter((a) => a.kind === kind));
+      })
+      .catch((err: Error) => setError(err.message));
+  }
+
+  useEffect(() => {
+    if (open) handleOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  return (
+    <Modal
+      isOpen={open}
+      onClose={onClose}
+    >
+      <div>
+        <div className="flex items-center justify-between border-b border-black/5 px-6 py-4">
+          <h3 className="font-serif text-lg font-semibold text-text">
+            {kind === 'image' ? 'Pick an image' : 'Pick a video'}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full bg-cream px-3 py-1 text-xs font-medium text-forest hover:bg-saffron-light transition-colors cursor-pointer"
+          >
+            Done
+          </button>
+        </div>
+
+        {error && (
+          <p className="mx-6 mt-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+            {error}
+          </p>
+        )}
+
+        {!assets && !error && (
+          <p className="px-6 py-10 text-center text-sm text-text-muted">
+            Loading library…
+          </p>
+        )}
+
+        {assets && assets.length === 0 && (
+          <p className="px-6 py-10 text-center text-sm text-text-muted">
+            Nothing here yet. Add assets in the Media Library first.
+          </p>
+        )}
+
+        {assets && assets.length > 0 && (
+          <div className="grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto p-6 sm:grid-cols-3">
+            {assets.map((asset) => {
+              const yt = youtubeId(asset.url);
+              return (
+                <button
+                  key={asset.id}
+                  type="button"
+                  onClick={() => {
+                    onPick(asset.url);
+                    onClose();
+                  }}
+                  className="group overflow-hidden rounded-xl ring-1 ring-black/5 transition-shadow hover:shadow-lg cursor-pointer text-left"
+                >
+                  <div className="aspect-video w-full overflow-hidden bg-cream">
+                    {asset.kind === 'video' && !yt ? (
+                      <video
+                        src={asset.url}
+                        muted
+                        playsInline
+                        preload="metadata"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={mediaThumb(asset.url)}
+                        alt={asset.title || asset.url}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  <p className="truncate px-2.5 py-2 text-xs font-medium text-text">
+                    {asset.title || asset.url}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </Modal>
+  );
+}
+
+/** Multi-value media field backed by the shared library. */
+function MediaLinesField({
+  field,
+  value,
+  onChange,
+}: {
+  field: FieldDef;
+  value: unknown;
+  onChange: (value: unknown) => void;
+}) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const urls: string[] = Array.isArray(value) ? (value as string[]) : [];
+
+  function addUrl(url: string) {
+    if (!urls.includes(url)) onChange([...urls, url]);
+  }
+
+  return (
+    <>
+      <textarea
+        value={urls.join('\n')}
+        onChange={(e) =>
+          onChange(
+            e.target.value
+              .split('\n')
+              .map((line) => line.trim())
+              .filter(Boolean)
+          )
+        }
+        placeholder={
+          field.placeholder ??
+          'One entry per line\nhttps://youtube.com/watch?v=…\n/assets/images/photo.jpg'
+        }
+        className={`${inputClasses('media')} resize-y`}
+      />
+      <p className="mt-1 font-sans text-xs text-text-muted">
+        One per line — or pick from the{' '}
+        <button
+          type="button"
+          onClick={() => setPickerOpen(true)}
+          className="font-medium text-forest underline underline-offset-2 hover:text-saffron cursor-pointer"
+        >
+          Media Library
+        </button>
+        .
+      </p>
+      <MediaPickerModal
+        kind={field.mediaKind ?? 'image'}
+        open={pickerOpen}
+        onClose={() => setPickerOpen(false)}
+        onPick={addUrl}
+      />
+    </>
+  );
 }
 
 function LocalizedInput({
@@ -723,6 +900,8 @@ function SingleInput({
           </p>
         </>
       );
+    case 'media':
+      return <MediaLinesField field={field} value={value} onChange={onChange} />;
     case 'number':
       return (
         <input

@@ -14,6 +14,7 @@ import type {
   Event,
   GalleryImage,
   ImpactStat,
+  MediaAsset,
   SevaCategory,
   TeamMember,
 } from '@/types';
@@ -34,6 +35,7 @@ const TABLES = {
   donations: 'donations',
   teamMembers: 'team_members',
   aboutContent: 'about_content',
+  mediaAssets: 'media_assets',
 } as const;
 
 /** Empty defaults — real UPI/QR values are set from the admin panel only. */
@@ -95,6 +97,11 @@ export function getGalleryImages(): Promise<GalleryImage[]> {
 
 export function getImpactStats(): Promise<ImpactStat[]> {
   return fetchTable<ImpactStat>(TABLES.impactStats, staticImpact);
+}
+
+/** Admin media library — starts empty, grows as assets are added. */
+export function getMediaAssets(): Promise<MediaAsset[]> {
+  return fetchTable<MediaAsset>(TABLES.mediaAssets, []);
 }
 
 /** All team rows in display order — admin-panel consumers only. */

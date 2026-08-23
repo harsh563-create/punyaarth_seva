@@ -195,3 +195,12 @@ export function DocIcon(props: IconProps) {
     </Base>
   );
 }
+
+export function FilmIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5" />
+    </Base>
+  );
+}

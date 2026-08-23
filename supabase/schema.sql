@@ -116,6 +116,19 @@ create table if not exists public.team_members (
   created_at       timestamptz not null default now()
 );
 
+-- Shared media library. Assets are added once here and reused across
+-- activities, events and any other module via the admin media picker.
+create table if not exists public.media_assets (
+  id         text primary key,
+  url        text not null,
+  kind       text not null default 'image'
+             check (kind in ('image', 'video')),
+  title      text not null default '',
+  source     text not null default 'link'
+             check (source in ('upload', 'youtube', 'link')),
+  created_at timestamptz not null default now()
+);
+
 -- Donor-submitted payment confirmations. No anon policies: reads/writes go
 -- through the Next.js API with the service-role key, so donor data stays private.
 create table if not exists public.donations (
@@ -137,6 +150,7 @@ alter table public.activities       enable row level security;
 alter table public.seva_categories  enable row level security;
 alter table public.gallery_images   enable row level security;
 alter table public.impact_stats     enable row level security;
+alter table public.media_assets     enable row level security;
 
 do $$
 declare

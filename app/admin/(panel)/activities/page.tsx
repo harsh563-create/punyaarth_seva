@@ -37,18 +37,21 @@ const fields: FieldDef[] = [
   {
     name: 'images',
     label: 'Photos',
-    type: 'lines',
+    type: 'media',
+    mediaKind: 'image',
     wide: true,
     placeholder: '/assets/images/photo-1.jpg\n/assets/images/photo-2.jpg',
+    hint: 'One per line — paste URLs or pick from the Media Library.',
   },
   {
     name: 'videos',
     label: 'Videos',
-    type: 'lines',
+    type: 'media',
+    mediaKind: 'video',
     wide: true,
     placeholder:
       'https://www.youtube.com/watch?v=VIDEO_ID\nhttps://youtu.be/VIDEO_ID\nhttps://example.com/video.mp4',
-    hint: 'One per line — a YouTube link becomes an embedded player, a direct .mp4/.webm URL plays inline.',
+    hint: 'One per line — YouTube links embed, direct .mp4/.webm play inline. Or pick from the Media Library.',
   },
 ];
 

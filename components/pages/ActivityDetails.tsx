@@ -6,6 +6,7 @@ import Modal from '@/components/ui/Modal';
 import FadeIn from '@/components/ui/FadeIn';
 import type { Activity } from '@/types';
 import { useLanguage } from '@/i18n/useLanguage';
+import { isDirectVideo, youtubeId } from '@/lib/media';
 
 const CATEGORY_CHIP: Record<string, string> = {
   'food-seva': 'bg-saffron/15 text-saffron-dark',
@@ -15,18 +16,6 @@ const CATEGORY_CHIP: Record<string, string> = {
   events: 'bg-beige text-text-muted',
   awareness: 'bg-forest-muted text-forest',
 };
-
-/** Extract a YouTube video id from watch / youtu.be / shorts / embed URLs. */
-function youtubeId(url: string): string | null {
-  const m = url.match(
-    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/
-  );
-  return m ? m[1] : null;
-}
-
-function isDirectVideo(url: string): boolean {
-  return /\.(mp4|webm|ogg|ogv|mov|m4v)(\?|#|$)/i.test(url);
-}
 
 function VideoBlock({ url }: { url: string }) {
   const ytId = youtubeId(url);

@@ -196,6 +196,13 @@ export const activitiesSchema = makeParse({
   featured: { validate: boolean },
 });
 
+export const mediaSchema = makeParse({
+  url: { validate: text(500), required: true },
+  kind: { validate: oneOf(['image', 'video']), required: true },
+  title: { validate: text(200, true) },
+  source: { validate: oneOf(['upload', 'youtube', 'link']) },
+});
+
 export const sevaCategoriesSchema = makeParse({
   title: { validate: localizedText, required: true },
   icon: { validate: text(100, true) },

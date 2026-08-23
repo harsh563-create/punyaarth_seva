@@ -5,6 +5,16 @@ export interface LocalizedText {
   hi: string;
 }
 
+/** A reusable asset in the admin media library. */
+export interface MediaAsset {
+  id: string;
+  url: string;
+  kind: 'image' | 'video';
+  title: string;
+  source: 'upload' | 'youtube' | 'link';
+  createdAt: string;
+}
+
 export interface Activity {
   id: string;
   title: LocalizedText;
