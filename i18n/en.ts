@@ -179,8 +179,9 @@ const en = {
     email: 'Email',
     phone: 'Phone (optional)',
     location: 'Location',
-    india: 'India',
-    mapPlaceholder: 'Map Integration',
+    address:
+      'Sadashiv Galaxy, PRHG+4WJ, Shakti Nagar, Sukhdev Vihar, Indore, Madhya Pradesh 452005',
+    directions: 'Get Directions',
     formTitle: 'Send Us a Message',
     successMessage: "Thank you for your message! We'll get back to you soon.",
     nameLabel: 'Name',

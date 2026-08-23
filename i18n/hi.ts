@@ -174,8 +174,9 @@ const hi: Dictionary = {
     email: 'ईमेल',
     phone: 'फ़ोन (वैकल्पिक)',
     location: 'स्थान',
-    india: 'भारत',
-    mapPlaceholder: 'मैप एकीकरण',
+    address:
+      'सदाशिव गैलेक्सी, PRHG+4WJ, शक्ति नगर, सुखदेव विहार, इंदौर, मध्य प्रदेश 452005',
+    directions: 'दिशा-निर्देश पाएँ',
     formTitle: 'हमें संदेश भेजें',
     successMessage: 'आपके संदेश के लिए धन्यवाद! हम शीघ्र ही आपसे संपर्क करेंगे।',
     nameLabel: 'नाम',

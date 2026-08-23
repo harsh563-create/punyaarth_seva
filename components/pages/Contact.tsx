@@ -71,7 +71,12 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-text">{t('contactPage.phone')}</h3>
-                    <p className="text-text-muted mt-1">+91 XXXXX XXXXX</p>
+                    <a
+                      href="tel:+919770074501"
+                      className="text-text-muted mt-1 inline-block transition-colors hover:text-saffron-dark"
+                    >
+                      +91 97700 74501
+                    </a>
                   </div>
                 </div>
 
@@ -84,7 +89,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-text">{t('contactPage.location')}</h3>
-                    <p className="text-text-muted mt-1">{t('contactPage.india')}</p>
+                    <p className="text-text-muted mt-1 max-w-xs leading-relaxed">
+                      {t('contactPage.address')}
+                    </p>
                   </div>
                 </div>
 
@@ -114,14 +121,28 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Map Placeholder */}
-              <div className="mt-10 rounded-2xl overflow-hidden bg-beige h-48 flex items-center justify-center">
-                <div className="text-center text-text-muted">
-                  <svg className="w-10 h-10 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+              {/* Map */}
+              <div className="mt-10 overflow-hidden rounded-2xl border border-beige-dark bg-beige shadow-sm">
+                <iframe
+                  title="Punyaarth Seva Samiti — Sadashiv Galaxy, Indore"
+                  src="https://www.google.com/maps?q=Sadashiv+Galaxy,+PRHG+4WJ,+Shakti+Nagar,+Sukhdev+Vihar,+Indore,+Madhya+Pradesh+452005&z=16&output=embed"
+                  className="h-64 w-full md:h-72"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Sadashiv+Galaxy,+PRHG+4WJ,+Shakti+Nagar,+Sukhdev+Vihar,+Indore,+Madhya+Pradesh+452005"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 bg-white py-3 font-sans text-sm font-medium text-forest transition-colors hover:bg-saffron hover:text-white cursor-pointer"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <p className="text-sm">{t('contactPage.mapPlaceholder')}</p>
-                </div>
+                  {t('contactPage.directions')}
+                </a>
               </div>
             </div>
 
