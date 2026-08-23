@@ -1,6 +1,7 @@
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import type { SevaCategory } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
 interface ActivityCardProps {
   seva: SevaCategory;
@@ -17,6 +18,7 @@ const iconMap: Record<string, string> = {
 
 export default function ActivityCard({ seva, index }: ActivityCardProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { t, tr } = useLanguage();
 
   return (
     <Link
@@ -30,25 +32,25 @@ export default function ActivityCard({ seva, index }: ActivityCardProps) {
       <div className="relative h-52 overflow-hidden">
         <img
           src={seva.image}
-          alt={seva.title}
+          alt={tr(seva.title)}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/60 to-transparent" />
         <div className="absolute bottom-4 left-4">
-          <span className="text-4xl" role="img" aria-label={seva.title}>
+          <span className="text-4xl" role="img" aria-label={tr(seva.title)}>
             {iconMap[seva.icon] || '❤️'}
           </span>
         </div>
       </div>
       <div className="p-6">
         <h3 className="font-serif text-xl font-semibold text-text group-hover:text-forest transition-colors">
-          {seva.title}
+          {tr(seva.title)}
         </h3>
         <p className="mt-2 text-text-muted text-sm leading-relaxed">
-          {seva.description}
+          {tr(seva.description)}
         </p>
         <div className="mt-4 inline-flex items-center text-forest font-medium text-sm group-hover:gap-2 transition-all">
-          Learn More
+          {t('common.learnMore')}
           <svg
             className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1"
             fill="none"

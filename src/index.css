@@ -25,8 +25,8 @@
   --color-text-muted: #7a7a7a;
   --color-text-on-dark: #faf8f5;
 
-  --font-serif: "Playfair Display", "DM Serif Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", "DM Serif Display", "Noto Serif Devanagari", Georgia, serif;
+  --font-sans: "Inter", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
 }
 
 html {

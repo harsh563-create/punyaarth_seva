@@ -6,9 +6,11 @@ import { galleryImages } from '@/data/gallery';
 import { Link } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 import type { GalleryImage } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
 export default function GalleryPreview() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const { tr, locale } = useLanguage();
   const previewImages = galleryImages.slice(0, 8);
 
   return (
@@ -43,13 +45,13 @@ export default function GalleryPreview() {
           <div className="p-2">
             <img
               src={selectedImage.src}
-              alt={selectedImage.alt}
+              alt={tr(selectedImage.alt)}
               className="w-full h-auto max-h-[70vh] object-contain rounded-xl"
             />
             <div className="p-4">
-              <p className="text-text font-medium">{selectedImage.alt}</p>
+              <p className="text-text font-medium">{tr(selectedImage.alt)}</p>
               <p className="text-text-muted text-sm mt-1">
-                {new Date(selectedImage.date).toLocaleDateString('en-US', {
+                {new Date(selectedImage.date).toLocaleDateString(locale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',

@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/i18n/useLanguage';
+import type { TranslationKey } from '@/i18n/translations';
 
-const footerLinks = [
-  { path: '/about', label: 'About Us' },
-  { path: '/seva', label: 'Our Seva' },
-  { path: '/activities', label: 'Activities' },
-  { path: '/events', label: 'Events' },
-  { path: '/join', label: 'Join Us' },
-  { path: '/contact', label: 'Contact' },
+const footerLinks: { path: string; label: TranslationKey }[] = [
+  { path: '/about', label: 'footer.aboutUs' },
+  { path: '/seva', label: 'nav.seva' },
+  { path: '/activities', label: 'nav.activities' },
+  { path: '/events', label: 'nav.events' },
+  { path: '/join', label: 'nav.join' },
+  { path: '/contact', label: 'nav.contact' },
 ];
 
 const socialLinks = [
@@ -22,6 +24,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="relative z-10 bg-[#0b2a19] text-text-on-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -36,18 +39,18 @@ export default function Footer() {
               />
               <span className="font-serif text-xl font-semibold text-text-on-dark">Punyaarth Seva</span>
             </Link>
-            <p className="text-text-on-dark/70 text-sm leading-relaxed">Seva for Humanity, Nature & Every Life.</p>
-            <p className="mt-4 text-text-on-dark/50 text-sm">Rooted in kindness, growing together.</p>
+            <p className="text-text-on-dark/70 text-sm leading-relaxed">{t('footer.tagline')}</p>
+            <p className="mt-4 text-text-on-dark/50 text-sm">{t('footer.motto')}</p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="font-serif text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.path}>
                   <Link to={link.path} className="text-text-on-dark/70 text-sm hover:text-saffron transition-colors">
-                    {link.label}
+                    {t(link.label)}
                   </Link>
                 </li>
               ))}
@@ -56,7 +59,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">Contact</h3>
+            <h3 className="font-serif text-lg font-semibold mb-4">{t('footer.contact')}</h3>
             <ul className="space-y-3 text-sm text-text-on-dark/70">
               <li className="flex items-start gap-3">
                 <svg className="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,8 +79,8 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h3 className="font-serif text-lg font-semibold mb-4">Follow Us</h3>
-            <p className="text-text-on-dark/70 text-sm mb-4">See our seva journey on social media.</p>
+            <h3 className="font-serif text-lg font-semibold mb-4">{t('footer.followUs')}</h3>
+            <p className="text-text-on-dark/70 text-sm mb-4">{t('footer.followText')}</p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer"
@@ -93,8 +96,8 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-text-on-dark/50 text-sm">&copy; 2026 Punyaarth Seva. All rights reserved.</p>
-          <p className="text-text-on-dark/50 text-sm">Made with ❤️ for Seva</p>
+          <p className="text-text-on-dark/50 text-sm">{t('footer.rights')}</p>
+          <p className="text-text-on-dark/50 text-sm">{t('footer.madeWith')}</p>
         </div>
       </div>
     </footer>

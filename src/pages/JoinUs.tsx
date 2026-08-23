@@ -6,6 +6,7 @@ import FadeIn from '@/components/ui/FadeIn';
 import { volunteerWays } from '@/data/volunteers';
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
+import { useLanguage } from '@/i18n/useLanguage';
 
 const iconMap: Record<string, ReactNode> = {
   clock: (
@@ -32,25 +33,26 @@ const iconMap: Record<string, ReactNode> = {
 
 export default function JoinUs() {
   const { ref: ctaRef, inView: ctaInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { t, tr } = useLanguage();
 
   return (
     <>
       <PageHero
-        title="Your Time Can Become Someone's Hope."
-        subtitle="Anyone can contribute. Find the way that works best for you."
+        title={t('joinPage.heroTitle')}
+        subtitle={t('joinPage.heroSubtitle')}
       />
 
       {/* Ways to Help */}
       <section className="py-20 md:py-28 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            title="Ways You Can Help"
-            subtitle="There are many ways to be a part of Punyaarth Seva."
+            title={t('joinPage.waysTitle')}
+            subtitle={t('joinPage.waysSubtitle')}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {volunteerWays.map((way, index) => (
               <FadeIn
-                key={way.title}
+                key={way.icon}
                 delay={index * 100}
                 className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow transition-transform duration-500 hover:-translate-y-1"
               >
@@ -58,10 +60,10 @@ export default function JoinUs() {
                   {iconMap[way.icon]}
                 </div>
                 <h3 className="font-serif text-xl font-semibold text-text">
-                  {way.title}
+                  {tr(way.title)}
                 </h3>
                 <p className="mt-3 text-text-muted leading-relaxed">
-                  {way.description}
+                  {tr(way.description)}
                 </p>
               </FadeIn>
             ))}
@@ -78,16 +80,15 @@ export default function JoinUs() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className={`${ctaInView ? 'animate-fade-in-up' : 'opacity-0'}`}>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-semibold">
-              Want to Volunteer?
+              {t('joinPage.volunteerTitle')}
             </h2>
             <p className="mt-6 text-lg text-text-on-dark/80 max-w-2xl mx-auto">
-              Every volunteer makes a difference. Reach out to us and we'll
-              connect you with opportunities to serve.
+              {t('joinPage.volunteerText')}
             </p>
             <div className="mt-10">
               <Link to="/contact">
                 <Button size="lg" variant="secondary">
-                  Get in Touch
+                  {t('joinPage.touchCta')}
                 </Button>
               </Link>
             </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { GalleryImage } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
 interface GalleryCardProps {
   image: GalleryImage;
@@ -8,6 +9,7 @@ interface GalleryCardProps {
 
 export default function GalleryCard({ image, onClick }: GalleryCardProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { tr } = useLanguage();
 
   return (
     <button
@@ -19,7 +21,7 @@ export default function GalleryCard({ image, onClick }: GalleryCardProps) {
       )}
       <img
         src={image.src}
-        alt={image.alt}
+        alt={tr(image.alt)}
         className={`w-full h-full object-cover transition-opacity transition-transform duration-700 group-hover:scale-110 ${
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}

@@ -4,6 +4,7 @@ import { sevaCategories } from '@/data/seva';
 import { Link } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 import type { SevaCategory } from '@/types';
+import { useLanguage } from '@/i18n/useLanguage';
 
 const iconMap: Record<string, string> = {
   utensils: '🍽️',
@@ -16,6 +17,7 @@ const iconMap: Record<string, string> = {
 function SevaCategoryBlock({ seva, index }: { seva: SevaCategory; index: number }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const isEven = index % 2 === 0;
+  const { t, tr } = useLanguage();
 
   return (
     <div
@@ -29,7 +31,7 @@ function SevaCategoryBlock({ seva, index }: { seva: SevaCategory; index: number 
         <div className="relative rounded-2xl overflow-hidden shadow-xl">
           <img
             src={seva.image}
-            alt={seva.title}
+            alt={tr(seva.title)}
             className="w-full h-[350px] md:h-[450px] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/30 to-transparent" />
@@ -38,25 +40,25 @@ function SevaCategoryBlock({ seva, index }: { seva: SevaCategory; index: number 
 
       <div className={`${isEven ? (inView ? 'animate-slide-in-right' : 'opacity-0') : (inView ? 'animate-slide-in-left' : 'opacity-0')}`}>
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-3xl">{iconMap[seva.icon]}</span>
+          <span className="text-3xl" aria-hidden="true">{iconMap[seva.icon]}</span>
           <h2 className="font-serif text-3xl md:text-4xl font-semibold text-text">
-            {seva.title}
+            {tr(seva.title)}
           </h2>
         </div>
         <p className="text-text-muted leading-relaxed text-lg">
-          {seva.longDescription}
+          {tr(seva.longDescription)}
         </p>
         <div className="mt-8">
           <h3 className="font-serif text-lg font-semibold text-forest mb-3">
-            Related Activities
+            {t('sevaPage.relatedActivities')}
           </h3>
           <ul className="space-y-2">
             {seva.activities.map((activity) => (
-              <li key={activity} className="flex items-center gap-2 text-text-muted">
+              <li key={activity.en} className="flex items-center gap-2 text-text-muted">
                 <svg className="w-4 h-4 text-saffron shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                {activity}
+                {tr(activity)}
               </li>
             ))}
           </ul>
@@ -67,11 +69,12 @@ function SevaCategoryBlock({ seva, index }: { seva: SevaCategory; index: number 
 }
 
 export default function OurSeva() {
+  const { t } = useLanguage();
   return (
     <>
       <PageHero
-        title="Our Seva"
-        subtitle="Every type of service matters. Explore the different ways we serve our community."
+        title={t('sevaPage.heroTitle')}
+        subtitle={t('sevaPage.heroSubtitle')}
       />
 
       <section className="py-20 md:py-28 bg-cream">
@@ -88,15 +91,15 @@ export default function OurSeva() {
       <section className="py-20 md:py-28 bg-forest text-text-on-dark">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-serif text-3xl md:text-4xl font-semibold">
-            Every Type of Seva Matters
+            {t('sevaPage.ctaTitle')}
           </h2>
           <p className="mt-4 text-text-on-dark/80 text-lg">
-            Choose how you want to contribute. Every act of service counts.
+            {t('sevaPage.ctaText')}
           </p>
           <div className="mt-8">
             <Link to="/join">
               <Button size="lg" variant="secondary">
-                Join Our Seva
+                {t('sevaPage.ctaButton')}
               </Button>
             </Link>
           </div>

@@ -3,8 +3,10 @@ import PageHero from '@/components/ui/PageHero';
 import SectionHeading from '@/components/ui/SectionHeading';
 import EventCard from '@/components/ui/EventCard';
 import { events } from '@/data/events';
+import { useLanguage } from '@/i18n/useLanguage';
 
 export default function Events() {
+  const { t } = useLanguage();
   const upcomingEvents = useMemo(
     () => events.filter((e) => e.status === 'upcoming'),
     []
@@ -17,16 +19,16 @@ export default function Events() {
   return (
     <>
       <PageHero
-        title="Seva & Community Events"
-        subtitle="Join us in making a difference through meaningful community events and seva activities."
+        title={t('eventsPage.heroTitle')}
+        subtitle={t('eventsPage.heroSubtitle')}
       />
 
       {/* Upcoming Events */}
       <section className="py-20 md:py-28 bg-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            title="Upcoming Events"
-            subtitle="Be a part of our upcoming seva activities and community gatherings."
+            title={t('eventsPage.upcomingTitle')}
+            subtitle={t('eventsPage.upcomingSubtitle')}
           />
           {upcomingEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -37,7 +39,7 @@ export default function Events() {
           ) : (
             <div className="text-center py-16">
               <p className="text-text-muted text-lg">
-                No upcoming events at the moment. Check back soon!
+                {t('eventsPage.noUpcoming')}
               </p>
             </div>
           )}
@@ -48,8 +50,8 @@ export default function Events() {
       <section className="py-20 md:py-28 bg-cream-dark/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            title="Past Events"
-            subtitle="A look back at our completed events and their impact."
+            title={t('eventsPage.pastTitle')}
+            subtitle={t('eventsPage.pastSubtitle')}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {pastEvents.map((event, index) => (
