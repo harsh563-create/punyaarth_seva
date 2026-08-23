@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf8f5;
+  --color-cream-dark: #f0ebe4;
+  --color-cream-light: #fdfcfa;
+  --color-beige: #f5f0eb;
+  --color-beige-dark: #e8dfd6;
+
+  --color-forest: #1a4d2e;
+  --color-forest-light: #2d6b43;
+  --color-forest-dark: #0f3320;
+  --color-forest-muted: #1a4d2e15;
+
+  --color-earth: #6b4226;
+  --color-earth-light: #8b5a34;
+  --color-earth-dark: #4a2e1a;
+
+  --color-saffron: #e67e22;
+  --color-saffron-light: #f09840;
+  --color-saffron-dark: #cc6d15;
+
+  --color-text: #1a1a1a;
+  --color-text-light: #4a4a4a;
+  --color-text-muted: #7a7a7a;
+  --color-text-on-dark: #faf8f5;
+
+  --font-serif: var(--font-playfair), var(--font-noto-serif-devanagari), Georgia, serif;
+  --font-sans: var(--font-inter), var(--font-noto-sans-devanagari), system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-beige-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-forest);
+}
+
+/* ============ HERO SKY & SECTIONS ============ */
+
+.hero-sky {
+  background:
+    radial-gradient(52rem 34rem at 18% 12%, rgb(255 214 138 / 0.35), transparent 62%),
+    radial-gradient(44rem 30rem at 86% 78%, rgb(163 216 146 / 0.18), transparent 60%),
+    linear-gradient(180deg, #fdf4e0 0%, #faeed3 34%, #f7f0dd 66%, var(--color-cream) 100%);
+}
+
+.section-curve-top {
+  clip-path: ellipse(58% 42px at 50% 0%);
+}
+
+/* Underground world shared by the closing CTA + footer so roots can grow
+   continuously out of the page into the footer. */
+.soil-section {
+  background:
+    radial-gradient(60rem 22rem at 50% -6rem, rgb(107 66 38 / 0.28), transparent 70%),
+    linear-gradient(180deg, var(--color-forest-dark) 0%, #0b2a19 100%);
+}
+
+.home-footer {
+  min-height: 0;
+}
+
+/* ============ TREE ANIMATIONS ============ */
+
+@keyframes clusterSway {
+  0%, 100% { transform: rotate(-0.7deg); }
+  50% { transform: rotate(0.8deg); }
+}
+
+@keyframes clusterSwayFast {
+  0%, 100% { transform: rotate(0.9deg) translateY(-0.6px); }
+  50% { transform: rotate(-1.1deg) translateY(0.8px); }
+}
+
+.tree-cluster {
+  animation: clusterSway 7s ease-in-out infinite;
+}
+
+.tree-cluster-fast {
+  animation: clusterSwayFast 4.6s ease-in-out infinite;
+}
+
+@keyframes leafFall {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.95;
+  }
+  82% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(600px);
+    opacity: 0;
+  }
+}
+
+.tree-fall {
+  animation-name: leafFall;
+  animation-timing-function: cubic-bezier(0.45, 0.05, 0.65, 0.6);
+  animation-iteration-count: infinite;
+}
+
+@keyframes leafDrift {
+  0% { transform: translateX(-13px) rotate(-38deg); }
+  25% { transform: translateX(6px) rotate(14deg); }
+  50% { transform: translateX(-8px) rotate(-20deg); }
+  75% { transform: translateX(11px) rotate(30deg); }
+  100% { transform: translateX(-13px) rotate(-38deg); }
+}
+
+.tree-drift {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: leafDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes grassSway {
+  0%, 100% { transform: rotate(-3.5deg); }
+  50% { transform: rotate(4.5deg); }
+}
+
+.grass-blade {
+  animation-name: grassSway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes birdPeck {
+  0%, 84%, 100% { transform: rotate(0deg); }
+  89% { transform: rotate(13deg); }
+  94% { transform: rotate(-3deg); }
+}
+
+.tree-bird-sit {
+  transform-box: fill-box;
+  transform-origin: 50% 82%;
+  animation: birdPeck 7.5s ease-in-out infinite;
+}
+
+@keyframes birdFlyPath {
+  0% {
+    transform: translate(var(--fly-from-x), var(--fly-from-y));
+    opacity: 0;
+  }
+  6% { opacity: 0.85; }
+  88% { opacity: 0.85; }
+  100% {
+    transform: translate(var(--fly-to-x), var(--fly-to-y));
+    opacity: 0;
+  }
+}
+
+.tree-bird-fly {
+  animation-name: birdFlyPath;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes wingFlap {
+  0%, 100% { transform: scaleY(0.45); }
+  50% { transform: scaleY(1.15); }
+}
+
+.tree-bird-flap {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: wingFlap 0.6s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.tree-sun-glow {
+  animation: sunPulse 9s ease-in-out infinite;
+}
+
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(14px, -18px) scale(1.04); }
+}
+
+.animate-float-blob {
+  animation: floatBlob 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-cluster,
+  .tree-cluster-fast,
+  .tree-fall,
+  .tree-drift,
+  .grass-blade,
+  .tree-bird-sit,
+  .tree-bird-fly,
+  .tree-bird-flap,
+  .tree-sun-glow,
+  .animate-float-blob {
+    animation: none !important;
+  }
+
+  .tree-bird-fly {
+    opacity: 0;
+  }
+}
+
+/* ============ EXISTING ANIMATIONS ============ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+@utility animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+@utility animate-slide-in-left {
+  animation: slideInLeft 0.7s ease-out forwards;
+}
+
+@utility animate-slide-in-right {
+  animation: slideInRight 0.7s ease-out forwards;
+}
+
+@utility animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@utility animate-scroll-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
