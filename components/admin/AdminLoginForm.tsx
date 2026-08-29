@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AdminLoginForm({ from }: { from?: string }) {
   const router = useRouter();
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
@@ -20,7 +21,7 @@ export default function AdminLoginForm({ from }: { from?: string }) {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, from: from ?? '' }),
+        body: JSON.stringify({ email, password, from: from ?? '' }),
       });
       const payload = (await response.json().catch(() => ({}))) as {
         ok?: boolean;
@@ -58,6 +59,26 @@ export default function AdminLoginForm({ from }: { from?: string }) {
 
           <div>
             <label
+              htmlFor="email"
+              className="mb-2 block text-sm font-medium text-cream"
+            >
+              Admin Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="username"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="admin@example.org"
+              className="w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3 font-sans text-text placeholder:text-cream/40 focus:border-saffron focus:outline-none focus:ring-2 focus:ring-saffron/40"
+            />
+          </div>
+
+          <div>
+            <label
               htmlFor="password"
               className="mb-2 block text-sm font-medium text-cream"
             >
@@ -69,7 +90,6 @@ export default function AdminLoginForm({ from }: { from?: string }) {
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="current-password"
-                autoFocus
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"

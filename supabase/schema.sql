@@ -9,6 +9,61 @@
 
 -- ---------------------------------------------------------------- tables --
 
+create extension if not exists pgcrypto with schema extensions;
+
+create table if not exists public.admin_users (
+  email         text primary key,
+  password_hash text not null,
+  name          text not null default 'Admin',
+  active        boolean not null default true,
+  created_at    timestamptz not null default now()
+);
+
+create or replace function public.seed_admin_user(
+  p_email    text,
+  p_password text,
+  p_name     text default 'Admin'
+) returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if length(coalesce(p_password, '')) < 8 then
+    raise exception 'Password must be at least 8 characters';
+  end if;
+
+  insert into public.admin_users (email, name, password_hash)
+  values (
+    lower(btrim(p_email)),
+    coalesce(nullif(btrim(p_name), ''), 'Admin'),
+    extensions.crypt(p_password, extensions.gen_salt('bf', 10))
+  )
+  on conflict (email) do update
+    set password_hash = excluded.password_hash,
+        name = excluded.name,
+        active = true;
+end;
+$$;
+
+create or replace function public.verify_admin_credentials(
+  p_email    text,
+  p_password text
+) returns text
+language sql
+security definer
+set search_path = public
+as $$
+  select name
+  from public.admin_users
+  where email = lower(btrim(p_email))
+    and active
+    and password_hash = extensions.crypt(
+      p_password,
+      password_hash
+    );
+$$;
+
 create table if not exists public.events (
   id                  text primary key,
   title               jsonb not null,
